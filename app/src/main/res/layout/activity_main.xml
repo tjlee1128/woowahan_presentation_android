@@ -6,14 +6,25 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:background="@color/white">
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="48dp"
-            android:text="발표목록보기"/>
+        android:background="@color/gray">
+        <RelativeLayout
+            android:id="@+id/activity_main_toolbar_rl"
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+            <include layout="@layout/layout_toolbar_drawer_search"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:layout_below="@+id/activity_main_toolbar_rl">
+            <ListView
+                android:id="@+id/activity_main_category_lv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@null"
+                android:dividerHeight="6dp"/>
+        </RelativeLayout>
     </RelativeLayout>
-
 </RelativeLayout>

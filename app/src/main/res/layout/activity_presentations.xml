@@ -3,14 +3,70 @@
     android:layout_height="match_parent"
     tools:context="com.baemin.woowahan_presentation_android.presentation.PresentationsActivity">
 
+    <!-- TOOLBAR -->
+    <RelativeLayout
+        android:id="@+id/activity_presentations_toolbar_rl"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <include
+            android:id="@+id/activity_presentations_toolbar_include"
+            layout="@layout/layout_toolbar_detail"/>
+    </RelativeLayout>
+
+    <!-- CONTENT -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:layout_below="@+id/activity_presentations_toolbar_rl"
+        android:background="@color/gray">
         <ListView
             android:id="@+id/activity_presentations_lv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"/>
+            android:divider="@null"
+            android:dividerHeight="6dp"/>
+
+        <!-- EMPTY VIEW -->
+        <RelativeLayout
+            android:id="@+id/activity_presentations_empty_rl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/gray"
+            android:visibility="gone"
+            android:gravity="center">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/activity_presentations_empty_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/ic_layers_clear_white_48dp"
+                    android:layout_marginBottom="20dp"/>
+                <TextView
+                    android:id="@+id/activity_presentations_empty_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/activity_presentations_empty_iv"
+                    android:layout_marginBottom="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:text="해당 카테고리에 자료가 없습니다!"/>
+                <Button
+                    android:id="@+id/activity_presentations_empty_btn"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/button_bg_large_selector"
+                    android:layout_below="@+id/activity_presentations_empty_tv"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:text="REFRESH"/>
+            </RelativeLayout>
+        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

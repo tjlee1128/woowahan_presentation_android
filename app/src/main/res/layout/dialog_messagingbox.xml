@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+        <!-- TITLE -->
+        <TextView
+            android:id="@+id/dialog_messagingbox_tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:background="#FF6F00"
+            android:textColor="#FFFFFFFF"
+            android:textSize="20sp"
+            tools:text="이 곳은 타이틀이 들어가는 공간입니다."/>
+
+        <!-- CONTENT -->
+        <RelativeLayout
+            android:id="@+id/dialog_messagingbox_rl_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dialog_messagingbox_tv_title"
+            android:background="#FFFFFFFF"
+            android:padding="44dp"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/dialog_messagingbox_content_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="1.2"
+                android:textColor="@color/black2"
+                tools:text="이 곳은 메세지가 들어가는 공간입니다이 곳은 메세지가 들어가는 공간입니다"/>
+        </RelativeLayout>
+
+        <!-- OK CANCEL BUTTON -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:layout_below="@+id/dialog_messagingbox_rl_content"
+            android:background="#FFFFFFFF">
+            <Button
+                android:id="@+id/dialog_messagingbox_btn_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:paddingTop="10dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="10dp"
+                android:background="@drawable/button_flat_selector"
+                android:textColor="@color/blue"
+                android:textSize="14sp"
+                android:text="확 인"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

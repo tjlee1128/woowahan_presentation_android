@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.baemin.woowahan_presentation_android.R;
+import com.baemin.woowahan_presentation_android.base.WPMessageDialog;
 import com.baemin.woowahan_presentation_android.main.MainActivity;
 import com.baemin.woowahan_presentation_android.model.AuthenticationModel;
 import com.baemin.woowahan_presentation_android.network.ServiceGenerator;
@@ -40,6 +41,7 @@ public class SignInActivity extends AppCompatActivity {
     @Bind(R.id.activity_sign_in_sign_in_btn)
     Button signinButton;
 
+    private WPMessageDialog messageDialog;
 
     @OnClick({R.id.activity_sign_in_sign_in_btn, R.id.activity_sign_in_sign_up_tv})
     public void onClick(View view) {
@@ -69,12 +71,6 @@ public class SignInActivity extends AppCompatActivity {
 
         initializeFlag();
         addTextChangedListener();
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        this.overridePendingTransition(R.anim.end_right_left_enter, R.anim.end_right_left_exit);
     }
 
     @Override
@@ -152,14 +148,34 @@ public class SignInActivity extends AppCompatActivity {
         Callback<AuthenticationModel> callback = new Callback<AuthenticationModel>() {
             @Override
             public void onResponse(Response<AuthenticationModel> response, Retrofit retrofit) {
-                AuthenticationModel authenticationModel = response.body();
+                if (response.body() != null) {
+                    AuthenticationModel authenticationModel = response.body();
 
-                PreferencesManager.getInstance().setAccessToken(authenticationModel.getAccess_token());
-                PreferencesManager.getInstance().setUser(authenticationModel.getUser());
+                    PreferencesManager.getInstance().setAccessToken(authenticationModel.getAccess_token());
+                    PreferencesManager.getInstance().setUser(authenticationModel.getUser());
 
-                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+
+                    messageDialog = new WPMessageDialog(SignInActivity.this, "SIGN IN", "로그인에 성공하였습니다!", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            messageDialog.dismiss();
+
+                            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                    messageDialog.show();
+
+                } else {
+                    messageDialog = new WPMessageDialog(SignInActivity.this, "SIGN IN", "일치하는 정보가 없습니다!", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            messageDialog.dismiss();
+                        }
+                    });
+                    messageDialog.show();
+                }
             }
 
             @Override

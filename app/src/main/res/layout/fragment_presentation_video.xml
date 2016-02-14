@@ -1,0 +1,126 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.baemin.woowahan_presentation_android.presentation.PresentationVideoFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:id="@+id/fragment_presentation_video_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+            <VideoView
+                android:id="@+id/fragment_presentation_video_vv"
+                android:layout_width="match_parent"
+                android:layout_height="230dp" />
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/fragment_presentation_video_rl">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="20dp">
+
+                <!-- PRESENTATION INFO -->
+                <!-- TITLE -->
+                <TextView
+                    android:id="@+id/fragment_presentation_title_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    tools:text="title"/>
+                <!-- SUBTITLE -->
+                <TextView
+                    android:id="@+id/fragment_presentation_subtitle_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:layout_below="@+id/fragment_presentation_title_tv"
+                    android:textColor="@color/black2"
+                    android:textSize="18sp"
+                    tools:text="subtitle"/>
+                <!-- DATE -->
+                <RelativeLayout
+                    android:id="@+id/fragment_presentation_date_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:layout_below="@+id/fragment_presentation_subtitle_tv">
+                    <TextView
+                        android:id="@+id/fragment_presentation_date_updatedat_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"
+                        tools:text="updated_at"/>
+                </RelativeLayout>
+                <!-- CONTENT -->
+                <TextView
+                    android:id="@+id/fragment_presentation_content_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="150dp"
+                    android:layout_below="@+id/fragment_presentation_date_rl"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    tools:text="content"/>
+
+                <!-- DIVIDER -->
+                <View
+                    android:id="@+id/fragment_presentation_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider"
+                    android:layout_below="@+id/fragment_presentation_content_tv"/>
+
+                <!-- USER INFO -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:gravity="center_vertical"
+                    android:layout_below="@+id/fragment_presentation_divider">
+                    <ImageView
+                        android:id="@+id/fragment_presentation_user_image_iv"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:scaleType="fitCenter"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="12dp"
+                        android:layout_toRightOf="@+id/fragment_presentation_user_image_iv">
+                        <TextView
+                            android:id="@+id/fragment_presentation_user_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="6dp"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            tools:text="이 름"/>
+                        <TextView
+                            android:id="@+id/fragment_presentation_team_name_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/fragment_presentation_user_tv"
+                            android:textSize="14sp"
+                            android:textColor="@color/gray"
+                            tools:text="팀이름"/>
+                    </RelativeLayout>
+                </RelativeLayout>
+            </RelativeLayout>
+        </ScrollView>
+
+    </RelativeLayout>
+</FrameLayout>

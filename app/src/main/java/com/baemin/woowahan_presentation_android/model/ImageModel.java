@@ -4,6 +4,8 @@ package com.baemin.woowahan_presentation_android.model;
  * Created by leetaejun on 2016. 2. 12..
  */
 
+import java.io.Serializable;
+
 /** JSON Response
 "image": {
     "id": 1,
@@ -17,7 +19,7 @@ package com.baemin.woowahan_presentation_android.model;
 }
 */
 
-public class ImageModel {
+public class ImageModel implements Serializable {
 
     private int id;
     private String file_name;

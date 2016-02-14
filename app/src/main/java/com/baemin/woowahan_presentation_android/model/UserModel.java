@@ -1,9 +1,11 @@
 package com.baemin.woowahan_presentation_android.model;
 
+import java.io.Serializable;
+
 /**
  * Created by leetaejun on 2016. 2. 12..
  */
-public class UserModel {
+public class UserModel implements Serializable {
 
     private int id;
     private String email;

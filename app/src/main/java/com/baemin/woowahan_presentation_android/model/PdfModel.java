@@ -4,6 +4,8 @@ package com.baemin.woowahan_presentation_android.model;
  * Created by leetaejun on 2016. 2. 12..
  */
 
+import java.io.Serializable;
+
 /**
 "pdf": {
     "id": 1,
@@ -14,7 +16,7 @@ package com.baemin.woowahan_presentation_android.model;
     "url": "/system/pdfs/pdfs/000/000/001/original/foodrain_mid_pt.pdf?1455264758"
 }
 */
-public class PdfModel {
+public class PdfModel implements Serializable {
 
     private int id;
     private String file_name;

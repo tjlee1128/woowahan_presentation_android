@@ -17,5 +17,6 @@
     <item name="white" type="color">#FFFFFFFF</item>
     <item name="statusbar_background" type="color">#FFFF8F00</item>
     <item name="toolbar_background" type="color">#FFFF6F00</item>
+    <item name="divider" type="color">#FFC7B299</item>
 
 </resources> 

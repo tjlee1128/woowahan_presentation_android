@@ -10,6 +10,7 @@ import com.baemin.woowahan_presentation_android.R;
 import com.baemin.woowahan_presentation_android.base.WPBaseAdapter;
 import com.baemin.woowahan_presentation_android.model.PresentationModel;
 import com.baemin.woowahan_presentation_android.util.Constants;
+import com.baemin.woowahan_presentation_android.util.DateConvertor;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -37,14 +38,33 @@ public class PresentationsAdapter extends WPBaseAdapter<PresentationModel> {
             holder = (sPresentationsViewHolder) convertView.getTag();
         }
 
-        Picasso.with(context)
-                .load(Constants.API_SERVER_BASE_URL + list.get(position).getVideo().getThumb_url())
-                .resize(120, 120)
-                .into(holder.thumbImageView);
+        if (list.get(position).getVideo() != null) {
+            Picasso.with(context)
+                    .load(Constants.API_SERVER_BASE_URL + list.get(position).getVideo().getThumb_url())
+                    .resize(120, 120)
+                    .into(holder.thumbImageView);
+        } else {
+            Picasso.with(context)
+                    .load(Constants.DEFAULT_THUMB_URL)
+                    .resize(120, 120)
+                    .into(holder.thumbImageView);
+        }
 
         holder.titleTextView.setText(list.get(position).getTitle());
-        holder.createdTextView.setText(list.get(position).getCreated_at());
-        holder.updatedTextView.setText(list.get(position).getUpdated_at());
+
+        String createdAt = "";
+        String updatedAt = "";
+        try {
+            createdAt = DateConvertor.convertToDate(list.get(position).getCreated_at());
+            createdAt = DateConvertor.utcToLocaltime(createdAt);
+            updatedAt = DateConvertor.convertToDate(list.get(position).getUpdated_at());
+            updatedAt = DateConvertor.utcToLocaltime(updatedAt);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        holder.createdTextView.setText(createdAt);
+        holder.updatedTextView.setText(updatedAt);
 
         holder.subtitleTextView.setText(list.get(position).getSubtitle());
 
@@ -52,6 +72,7 @@ public class PresentationsAdapter extends WPBaseAdapter<PresentationModel> {
                 .load(Constants.API_SERVER_BASE_URL + list.get(position).getUser().getImage().getThumb_url())
                 .into(holder.userImageView);
         holder.userTextView.setText(list.get(position).getUser().getFullname());
+        holder.teamnameTextView.setText(list.get(position).getUser().getTeam_name());
 
         return convertView;
     }
@@ -77,6 +98,9 @@ public class PresentationsAdapter extends WPBaseAdapter<PresentationModel> {
 
         @Bind(R.id.row_presentations_user_name_tv)
         TextView userTextView;
+
+        @Bind(R.id.row_presentations_user_teamname_tv)
+        TextView teamnameTextView;
 
         public sPresentationsViewHolder(View view) {
             ButterKnife.bind(this, view);

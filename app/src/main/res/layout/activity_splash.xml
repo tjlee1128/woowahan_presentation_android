@@ -14,8 +14,8 @@
             android:id="@+id/activity_splash_shimmer_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:reflectionColor="#ffff6f00"
-            android:textStyle="italic"
+            app:reflectionColor="#FFFF5F00"
+            android:textStyle="bold"
             android:textColor="#ff000000"
             android:textSize="32sp"
             android:text="우아한 프리젠테이션"/>

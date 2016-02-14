@@ -1,6 +1,7 @@
 package com.baemin.woowahan_presentation_android.main;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -28,6 +29,9 @@ import retrofit.Response;
 import retrofit.Retrofit;
 
 public class SplashActivity extends AppCompatActivity {
+
+    // Splash screen timer
+    private static int SPLASH_TIME_OUT = 3000;
 
     private Callback<List<CategoryModel>> mCategoryCallback = new Callback<List<CategoryModel>>() {
         @Override
@@ -83,10 +87,15 @@ public class SplashActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        CategoryService categoryService = ServiceGenerator.createService(CategoryService.class);
-        Call<List<CategoryModel>> call = categoryService.loadCategories();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                CategoryService categoryService = ServiceGenerator.createService(CategoryService.class);
+                Call<List<CategoryModel>> call = categoryService.loadCategories();
 
-        call.enqueue(mCategoryCallback);
+                call.enqueue(mCategoryCallback);
+            }
+        }, SPLASH_TIME_OUT);
     }
 
     @Override

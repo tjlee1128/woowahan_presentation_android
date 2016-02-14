@@ -1,9 +1,11 @@
 package com.baemin.woowahan_presentation_android.model;
 
+import java.io.Serializable;
+
 /**
  * Created by leetaejun on 2016. 2. 14..
  */
-public class TeamModel {
+public class TeamModel implements Serializable {
     private int id;
     private String name;
 
