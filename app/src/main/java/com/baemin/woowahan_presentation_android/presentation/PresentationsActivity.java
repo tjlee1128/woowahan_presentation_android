@@ -26,9 +26,7 @@ public class PresentationsActivity extends AppCompatActivity {
 
     @Bind(R.id.activity_presentations_lv)
     ListView presentationsListView;
-
     private PresentationsModel mPresentationsModel;
-
     private Callback<PresentationsModel> mCallback = new Callback<PresentationsModel>() {
         @Override
         public void onResponse(Response<PresentationsModel> response, Retrofit retrofit) {
@@ -47,9 +45,14 @@ public class PresentationsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_presentations);
         ButterKnife.bind(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         PresentationService presentationService = ServiceGenerator.createService(PresentationService.class);
-        Call<PresentationsModel> call = presentationService.loadPresentations();
+        Call<PresentationsModel> call = presentationService.loadPresentations(1);
 
         call.enqueue(mCallback);
     }
@@ -58,27 +61,5 @@ public class PresentationsActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_presentations, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

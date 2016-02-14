@@ -1,0 +1,181 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.baemin.woowahan_presentation_android.user.SignUpActivity">
+
+    <!-- TOOLBAR -->
+    <RelativeLayout
+        android:id="@+id/activity_sign_up_toolbar_rl"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <include
+            android:id="@+id/activity_sign_up_toolbar_include"
+            layout="@layout/layout_toolbar_close"/>
+    </RelativeLayout>
+
+    <!-- SCROLL VIEW -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:layout_below="@+id/activity_sign_up_toolbar_rl">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp">
+                <!-- E-MAIL -->
+                <RelativeLayout
+                    android:id="@+id/activity_sign_up_email_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp">
+                    <RelativeLayout
+                        android:id="@+id/activity_sign_up_email_text_rl"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="E-MAIL"/>
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@id/activity_sign_up_email_text_rl"
+                        android:gravity="center">
+                        <EditText
+                            android:id="@+id/activity_sign_up_email_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="textEmailAddress"
+                            android:maxLength="50"
+                            android:singleLine="true"
+                            android:text="\@woowahan.com"/>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <!-- PASSWORD -->
+                <RelativeLayout
+                    android:id="@+id/activity_sign_up_password_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_below="@+id/activity_sign_up_email_rl">
+                    <RelativeLayout
+                        android:id="@+id/activity_sign_up_password_text_rl"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="PASSWORD"/>
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@id/activity_sign_up_password_text_rl"
+                        android:gravity="center">
+                        <EditText
+                            android:id="@+id/activity_sign_up_password_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="textPassword"
+                            android:hint="비밀번호 입력란입니다"
+                            android:textColorHint="@color/gray"
+                            android:maxLength="20"
+                            android:singleLine="true"/>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <!-- FULL NAME -->
+                <RelativeLayout
+                    android:id="@+id/activity_sign_up_fullname_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_below="@+id/activity_sign_up_password_rl">
+                    <RelativeLayout
+                        android:id="@+id/activity_sign_up_fullname_text_rl"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="FULL NAME"/>
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@id/activity_sign_up_fullname_text_rl"
+                        android:gravity="center">
+                        <EditText
+                            android:id="@+id/activity_sign_up_fullname_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="textEmailSubject"
+                            android:hint="이름 입력란입니다"
+                            android:textColorHint="@color/gray"
+                            android:maxLength="20"
+                            android:singleLine="true"/>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <!-- TEAM -->
+                <RelativeLayout
+                    android:id="@+id/activity_sign_up_team_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_below="@+id/activity_sign_up_fullname_rl"
+                    android:layout_marginBottom="14dp">
+                    <RelativeLayout
+                        android:id="@+id/activity_sign_up_team_text_rl"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="TEAM"/>
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@id/activity_sign_up_team_text_rl"
+                        android:gravity="center">
+                        <Spinner
+                            android:id="@+id/activity_sign_up_team_spinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <!-- SIGN UP BUTTON -->
+                <RelativeLayout
+                    android:id="@+id/activity_sign_up_sign_up_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/activity_sign_up_team_rl"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center">
+                    <Button
+                        android:id="@+id/activity_sign_up_sign_up_btn"
+                        android:layout_width="240dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button_bg_large_selector"
+                        android:enabled="false"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:text="SIGN UP"/>
+                </RelativeLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

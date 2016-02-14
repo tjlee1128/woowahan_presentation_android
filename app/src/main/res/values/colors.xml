@@ -15,5 +15,7 @@
     <item name="black2" type="color">#FF3D4048</item>
     <item name="gray" type="color">#FF9B9B9B</item>
     <item name="white" type="color">#FFFFFFFF</item>
+    <item name="statusbar_background" type="color">#FFFF8F00</item>
+    <item name="toolbar_background" type="color">#FFFF6F00</item>
 
 </resources> 

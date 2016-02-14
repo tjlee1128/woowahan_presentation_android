@@ -14,7 +14,7 @@ import retrofit.http.Path;
  */
 public interface PresentationService {
     @GET("api/presentations.json")
-    Call<PresentationsModel> loadPresentations();
+    Call<PresentationsModel> loadPresentations(@Path("category_id") int category_id);
 
     @GET("api/presentations/{id}.json")
     Call<PresentationModel> loadPresentation(@Path("id") int id);

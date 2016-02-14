@@ -3,9 +3,14 @@
     android:layout_height="match_parent"
     tools:context="com.baemin.woowahan_presentation_android.presentation.PresentationsActivity">
 
-    <ListView
-        android:id="@+id/activity_presentations_lv"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
+        android:layout_height="match_parent"
+        android:background="@color/white">
+        <ListView
+            android:id="@+id/activity_presentations_lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+    </RelativeLayout>
 </RelativeLayout>

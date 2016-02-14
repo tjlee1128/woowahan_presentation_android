@@ -8,6 +8,7 @@ import java.util.List;
 public class PresentationModel {
 
     private int id;
+    private int category_id;
     private String title;
     private String subtitle;
     private String content;
@@ -20,6 +21,10 @@ public class PresentationModel {
 
     public int getId() {
         return id;
+    }
+
+    public int getCategory_id() {
+        return category_id;
     }
 
     public String getTitle() {

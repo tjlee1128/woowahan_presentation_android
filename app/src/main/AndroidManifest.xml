@@ -8,10 +8,13 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/MyTheme"
+        android:name=".application.WPApplication">
         <activity
-            android:name=".main.MainActivity"
-            android:label="@string/app_name" >
+            android:name=".main.SplashActivity"
+            android:label="@string/title_activity_splash"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,8 +22,27 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".main.MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
             android:name=".presentation.PresentationsActivity"
-            android:label="@string/title_activity_presentations" >
+            android:label="@string/title_activity_presentations"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".user.SignInActivity"
+            android:label="@string/title_activity_sign_in"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyTheme">
+        </activity>
+        <activity
+            android:name=".user.SignUpActivity"
+            android:label="@string/title_activity_sign_up"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyTheme">
         </activity>
     </application>
 

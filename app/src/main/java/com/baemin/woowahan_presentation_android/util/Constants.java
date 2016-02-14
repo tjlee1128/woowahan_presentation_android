@@ -5,5 +5,5 @@ package com.baemin.woowahan_presentation_android.util;
  */
 public class Constants {
 
-    public static final String API_SERVER_BASE_URL = "http://10.10.2.213:3000";
+    public static final String API_SERVER_BASE_URL = "http://192.168.0.8:3000";
 }
