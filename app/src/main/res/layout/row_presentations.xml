@@ -96,19 +96,50 @@
             android:background="@color/divider"
             android:layout_below="@+id/row_presentations_presentation" />
 
-        <!-- USER INFO -->
+        <!-- PRESENTATION INFO & USER INFO -->
         <RelativeLayout
             android:id="@+id/row_presentations_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="12dp"
             android:background="@color/white"
             android:layout_below="@+id/row_presentations_divider">
+
+
+            <!-- PRESENTATION INFO -->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/row_presentations_isvideo_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/outline_blue"
+                    android:padding="3dp"
+                    android:layout_marginRight="4dp"
+                    android:textColor="@color/blue"
+                    android:textSize="10sp"
+                    android:text="VIDEO"/>
+                <TextView
+                    android:id="@+id/row_presentations_ispdf_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/row_presentations_isvideo_tv"
+                    android:background="@drawable/outline_red"
+                    android:padding="3dp"
+                    android:textColor="@color/red"
+                    android:textSize="10sp"
+                    android:text="PDF"/>
+            </RelativeLayout>
+
+            <!-- USER INFO -->
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:padding="12dp"
                 android:gravity="center_vertical">
+
+
                 <RelativeLayout
                     android:id="@+id/row_presentations_user_rl"
                     android:layout_width="wrap_content"

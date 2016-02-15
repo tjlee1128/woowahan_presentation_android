@@ -39,11 +39,14 @@ public class PresentationActivity extends AppCompatActivity {
     @Bind(R.id.activity_presentation_tl)
     TabLayout presentationTabLayout;
 
+    private PresentationModel presentationModel;
+
     // network
     private Callback<PresentationModel> callback = new Callback<PresentationModel>() {
         @Override
         public void onResponse(Response<PresentationModel> response, Retrofit retrofit) {
-            presentationViewPager.setAdapter(new PresentationFragmentPagerAdapter(getSupportFragmentManager(), PresentationActivity.this, response.body()));
+            presentationModel = response.body();
+            presentationViewPager.setAdapter(new PresentationFragmentPagerAdapter(getSupportFragmentManager(), PresentationActivity.this, presentationModel));
             presentationTabLayout.setupWithViewPager(presentationViewPager);
 
             progressDialog.dismiss();
@@ -74,16 +77,20 @@ public class PresentationActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        PresentationService presentationService = ServiceGenerator.createService(PresentationService.class);
-        Call<PresentationModel> call = presentationService.loadPresentation(presentation_id);
-        call.enqueue(callback);
+        if (presentationModel == null) {
+            PresentationService presentationService = ServiceGenerator.createService(PresentationService.class);
+            Call<PresentationModel> call = presentationService.loadPresentation(presentation_id);
+            call.enqueue(callback);
 
-        progressDialog = new ProgressDialog(PresentationActivity.this);
-        progressDialog.setMessage("자료를 가져오는 중입니다.");
-        progressDialog.setIndeterminate(false);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setCancelable(true);
-        progressDialog.show();
+            progressDialog = new ProgressDialog(PresentationActivity.this);
+            progressDialog.setMessage("자료를 가져오는 중입니다.");
+            progressDialog.setIndeterminate(false);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setCancelable(true);
+            progressDialog.show();
+        } else {
+
+        }
     }
 
     @Override

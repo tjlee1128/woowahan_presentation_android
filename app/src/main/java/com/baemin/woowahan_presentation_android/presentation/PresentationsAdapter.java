@@ -38,16 +38,27 @@ public class PresentationsAdapter extends WPBaseAdapter<PresentationModel> {
             holder = (sPresentationsViewHolder) convertView.getTag();
         }
 
+        // initialize
+        holder.isVideoTextView.setVisibility(View.GONE);
+        holder.isPdfTextView.setVisibility(View.GONE);
+
+        // has video?
         if (list.get(position).getVideo() != null) {
             Picasso.with(context)
                     .load(Constants.API_SERVER_BASE_URL + list.get(position).getVideo().getThumb_url())
                     .resize(120, 120)
                     .into(holder.thumbImageView);
+            holder.isVideoTextView.setVisibility(View.VISIBLE);
         } else {
             Picasso.with(context)
                     .load(Constants.DEFAULT_THUMB_URL)
                     .resize(120, 120)
                     .into(holder.thumbImageView);
+        }
+
+        // has pdf?
+        if (list.get(position).getPdf() != null) {
+            holder.isPdfTextView.setVisibility(View.VISIBLE);
         }
 
         holder.titleTextView.setText(list.get(position).getTitle());
@@ -92,6 +103,12 @@ public class PresentationsAdapter extends WPBaseAdapter<PresentationModel> {
 
         @Bind(R.id.row_presentations_presentation_subtitle_tv)
         TextView subtitleTextView;
+
+        @Bind(R.id.row_presentations_isvideo_tv)
+        TextView isVideoTextView;
+
+        @Bind(R.id.row_presentations_ispdf_tv)
+        TextView isPdfTextView;
 
         @Bind(R.id.row_presentations_user_image_iv)
         ImageView userImageView;

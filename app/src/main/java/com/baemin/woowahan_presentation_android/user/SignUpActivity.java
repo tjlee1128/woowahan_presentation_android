@@ -1,5 +1,6 @@
 package com.baemin.woowahan_presentation_android.user;
 
+import android.app.ProgressDialog;
 import android.database.DataSetObserver;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -65,6 +66,9 @@ public class SignUpActivity extends AppCompatActivity {
     private UserModel userModel;
     private AuthenticationModel authenticationModel;
 
+    // Dialog
+    private ProgressDialog progressDialog;
+
     @OnClick(R.id.activity_sign_up_sign_up_btn)
     public void onClick() {
         userModel.setEmail(emailEditText.getText().toString());
@@ -81,14 +85,23 @@ public class SignUpActivity extends AppCompatActivity {
 
                 PreferencesManager.getInstance().setAccessToken(authenticationModel.getAccess_token());
                 PreferencesManager.getInstance().setUser(authenticationModel.getUser());
+
+                progressDialog.dismiss();
             }
 
             @Override
             public void onFailure(Throwable t) {
                 Toast.makeText(SignUpActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
             }
         };
         call.enqueue(callback);
+        progressDialog = new ProgressDialog(SignUpActivity.this);
+        progressDialog.setMessage("회원가입 중입니다.");
+        progressDialog.setIndeterminate(false);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(true);
+        progressDialog.show();
     }
 
     @Override

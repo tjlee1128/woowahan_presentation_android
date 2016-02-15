@@ -98,17 +98,19 @@ public class PresentationsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        PresentationService presentationService = ServiceGenerator.createService(PresentationService.class);
-        Call<PresentationsModel> call = presentationService.loadPresentations(category_id);
+        if (mPresentationsModel == null) {
+            PresentationService presentationService = ServiceGenerator.createService(PresentationService.class);
+            Call<PresentationsModel> call = presentationService.loadPresentations(category_id);
 
-        call.enqueue(mCallback);
+            call.enqueue(mCallback);
 
-        progressDialog = new ProgressDialog(PresentationsActivity.this);
-        progressDialog.setMessage("목록를 가져오는 중입니다.");
-        progressDialog.setIndeterminate(false);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setCancelable(true);
-        progressDialog.show();
+            progressDialog = new ProgressDialog(PresentationsActivity.this);
+            progressDialog.setMessage("목록를 가져오는 중입니다.");
+            progressDialog.setIndeterminate(false);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setCancelable(true);
+            progressDialog.show();
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.baemin.woowahan_presentation_android.user;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,6 +43,7 @@ public class SignInActivity extends AppCompatActivity {
     Button signinButton;
 
     private WPMessageDialog messageDialog;
+    private ProgressDialog progressDialog;
 
     @OnClick({R.id.activity_sign_in_sign_in_btn, R.id.activity_sign_in_sign_up_tv})
     public void onClick(View view) {
@@ -176,13 +178,21 @@ public class SignInActivity extends AppCompatActivity {
                     });
                     messageDialog.show();
                 }
+                progressDialog.dismiss();
             }
 
             @Override
             public void onFailure(Throwable t) {
                 Toast.makeText(SignInActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
             }
         };
         call.enqueue(callback);
+        progressDialog = new ProgressDialog(SignInActivity.this);
+        progressDialog.setMessage("로그인 중입니다.");
+        progressDialog.setIndeterminate(false);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(true);
+        progressDialog.show();
     }
 }
