@@ -47,7 +47,7 @@
             android:label="@string/title_activity_presentation_only_video" />
         <activity
             android:name=".presentation.PresentationOnlyPdfActivity"
-            android:label="@string/title_activity_presentation_only_pdf"></activity>
+            android:label="@string/title_activity_presentation_only_pdf" />
     </application>
 
 </manifest>

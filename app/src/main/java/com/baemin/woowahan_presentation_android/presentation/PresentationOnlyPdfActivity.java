@@ -1,6 +1,7 @@
 package com.baemin.woowahan_presentation_android.presentation;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.v4.view.ViewPager;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baemin.woowahan_presentation_android.R;
+import com.baemin.woowahan_presentation_android.model.ImageModel;
 import com.baemin.woowahan_presentation_android.model.PresentationModel;
 import com.baemin.woowahan_presentation_android.network.PresentationService;
 import com.baemin.woowahan_presentation_android.network.ServiceGenerator;
@@ -19,6 +21,9 @@ import com.baemin.woowahan_presentation_android.util.Constants;
 import com.baemin.woowahan_presentation_android.util.DateConvertor;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
+
+import java.io.Serializable;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -36,6 +41,7 @@ public class PresentationOnlyPdfActivity extends AppCompatActivity {
     @Bind(R.id.activity_presentation_only_pdf_toolbar_include)
     View toolbarView;
 
+    // ViewPager
     @Bind(R.id.activity_presentation_only_pdf_vp)
     ViewPager pdfViewPager;
     private PresentationPdfPagerAdapter pdfPagerAdapter;
