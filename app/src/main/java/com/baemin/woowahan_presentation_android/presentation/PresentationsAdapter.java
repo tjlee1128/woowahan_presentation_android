@@ -11,6 +11,7 @@ import com.baemin.woowahan_presentation_android.base.WPBaseAdapter;
 import com.baemin.woowahan_presentation_android.model.PresentationModel;
 import com.baemin.woowahan_presentation_android.util.Constants;
 import com.baemin.woowahan_presentation_android.util.DateConvertor;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -90,7 +91,7 @@ public class PresentationsAdapter extends WPBaseAdapter<PresentationModel> {
 
     public static class sPresentationsViewHolder {
         @Bind(R.id.row_presentations_presentation_thumb_iv)
-        ImageView thumbImageView;
+        RoundedImageView thumbImageView;
 
         @Bind(R.id.row_presentations_presentation_title_tv)
         TextView titleTextView;
@@ -111,7 +112,7 @@ public class PresentationsAdapter extends WPBaseAdapter<PresentationModel> {
         TextView isPdfTextView;
 
         @Bind(R.id.row_presentations_user_image_iv)
-        ImageView userImageView;
+        RoundedImageView userImageView;
 
         @Bind(R.id.row_presentations_user_name_tv)
         TextView userTextView;

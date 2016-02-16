@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.baemin.woowahan_presentation_android.presentation.PresentationOnlyPdfActivity">
+
+    <!-- TOOLBAR -->
+    <RelativeLayout
+        android:id="@+id/activity_presentation_only_pdf_toolbar_rl"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <include
+            android:id="@+id/activity_presentation_only_pdf_toolbar_include"
+            layout="@layout/layout_toolbar_detail"/>
+    </RelativeLayout>
+
+    <!-- CONTENT -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/activity_presentation_only_pdf_toolbar_rl">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/gray">
+            <!-- PDF CONTENT -->
+            <RelativeLayout
+                android:id="@+id/activity_presentation_only_pdf_titlebar_rl"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="2dp"
+                android:background="@color/statusbar_background">
+                <RelativeLayout
+                    android:id="@+id/activity_presentation_only_pdf_chevronleft_rl"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/ic_chevron_left_white_24dp"/>
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/activity_presentation_only_pdf_pagertitle_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    tools:text="size"/>
+                <RelativeLayout
+                    android:id="@+id/activity_presentation_only_pdf_chevronright_rl"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/ic_chevron_right_white_24dp"/>
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <!-- VIEW PAGER -->
+            <android.support.v4.view.ViewPager
+                android:id="@+id/activity_presentation_only_pdf_vp"
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:layout_marginBottom="2dp"
+                android:layout_below="@+id/activity_presentation_only_pdf_titlebar_rl"/>
+
+            <!-- INFO -->
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:layout_below="@+id/activity_presentation_only_pdf_vp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="20dp">
+
+                    <!-- PRESENTATION INFO -->
+                    <!-- TITLE -->
+                    <TextView
+                        android:id="@+id/activity_presentation_only_pdf_title_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:textColor="@color/black"
+                        android:textSize="24sp"
+                        tools:text="title"/>
+                    <!-- SUBTITLE -->
+                    <TextView
+                        android:id="@+id/activity_presentation_only_pdf_subtitle_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_below="@+id/activity_presentation_only_pdf_title_tv"
+                        android:textColor="@color/black2"
+                        android:textSize="18sp"
+                        tools:text="subtitle"/>
+                    <!-- DATE -->
+                    <RelativeLayout
+                        android:id="@+id/activity_presentation_only_pdf_date_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:layout_below="@+id/activity_presentation_only_pdf_subtitle_tv">
+                        <TextView
+                            android:id="@+id/activity_presentation_only_pdf_date_updatedat_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/gray"
+                            android:textSize="14sp"
+                            tools:text="updated_at"/>
+                    </RelativeLayout>
+                    <!-- CONTENT -->
+                    <TextView
+                        android:id="@+id/activity_presentation_only_pdf_content_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="150dp"
+                        android:layout_below="@+id/activity_presentation_only_pdf_date_rl"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        tools:text="content"/>
+
+                    <!-- DIVIDER -->
+                    <View
+                        android:id="@+id/activity_presentation_only_pdf_divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/divider"
+                        android:layout_below="@+id/activity_presentation_only_pdf_content_tv"/>
+
+                    <!-- USER INFO -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:gravity="center_vertical"
+                        android:layout_below="@+id/activity_presentation_only_pdf_divider">
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:id="@+id/activity_presentation_only_pdf_user_image_iv"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            app:riv_corner_radius="0.5dp"
+                            app:riv_border_width="0.5dp"
+                            app:riv_border_color="@color/black"
+                            app:riv_mutate_background="true"/>
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="12dp"
+                            android:layout_toRightOf="@+id/activity_presentation_only_pdf_user_image_iv">
+                            <TextView
+                                android:id="@+id/activity_presentation_only_pdf_user_tv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="6dp"
+                                android:textSize="14sp"
+                                android:textColor="@color/black"
+                                tools:text="이 름"/>
+                            <TextView
+                                android:id="@+id/activity_presentation_only_pdf_team_name_tv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/activity_presentation_only_pdf_user_tv"
+                                android:textSize="14sp"
+                                android:textColor="@color/gray"
+                                tools:text="팀이름"/>
+                        </RelativeLayout>
+                    </RelativeLayout>
+                </RelativeLayout>
+            </ScrollView>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

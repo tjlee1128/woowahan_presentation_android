@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.baemin.woowahan_presentation_android.presentation.PresentationOnlyVideoActivity">
+
+    <!-- TOOLBAR -->
+    <RelativeLayout
+        android:id="@+id/activity_presentation_only_video_toolbar_rl"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <include
+            android:id="@+id/activity_presentation_only_video_toolbar_include"
+            layout="@layout/layout_toolbar_detail"/>
+    </RelativeLayout>
+
+
+    <!-- CONTENT -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/activity_presentation_only_video_toolbar_rl">
+        <RelativeLayout
+            android:id="@+id/activity_presentation_only_video_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center">
+            <VideoView
+                android:id="@+id/activity_presentation_only_video_vv"
+                android:layout_width="match_parent"
+                android:layout_height="230dp" />
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/activity_presentation_only_video_rl">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="20dp">
+
+                <!-- PRESENTATION INFO -->
+                <!-- TITLE -->
+                <TextView
+                    android:id="@+id/activity_presentation_only_video_title_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    tools:text="title"/>
+                <!-- SUBTITLE -->
+                <TextView
+                    android:id="@+id/activity_presentation_only_video_subtitle_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:layout_below="@+id/activity_presentation_only_video_title_tv"
+                    android:textColor="@color/black2"
+                    android:textSize="18sp"
+                    tools:text="subtitle"/>
+                <!-- DATE -->
+                <RelativeLayout
+                    android:id="@+id/activity_presentation_only_video_date_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:layout_below="@+id/activity_presentation_only_video_subtitle_tv">
+                    <TextView
+                        android:id="@+id/activity_presentation_only_video_date_updatedat_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"
+                        tools:text="updated_at"/>
+                </RelativeLayout>
+                <!-- CONTENT -->
+                <TextView
+                    android:id="@+id/activity_presentation_only_video_content_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="150dp"
+                    android:layout_below="@+id/activity_presentation_only_video_date_rl"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    tools:text="content"/>
+
+                <!-- DIVIDER -->
+                <View
+                    android:id="@+id/activity_presentation_only_video_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider"
+                    android:layout_below="@+id/activity_presentation_only_video_content_tv"/>
+
+                <!-- USER INFO -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:gravity="center_vertical"
+                    android:layout_below="@+id/activity_presentation_only_video_divider">
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/activity_presentation_only_video_user_image_iv"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        app:riv_corner_radius="0.5dp"
+                        app:riv_border_width="0.5dp"
+                        app:riv_border_color="@color/black"
+                        app:riv_mutate_background="true" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="12dp"
+                        android:layout_toRightOf="@+id/activity_presentation_only_video_user_image_iv">
+                        <TextView
+                            android:id="@+id/activity_presentation_only_video_user_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="6dp"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            tools:text="이 름"/>
+                        <TextView
+                            android:id="@+id/activity_presentation_only_video_team_name_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/activity_presentation_only_video_user_tv"
+                            android:textSize="14sp"
+                            android:textColor="@color/gray"
+                            tools:text="팀이름"/>
+                    </RelativeLayout>
+                </RelativeLayout>
+            </RelativeLayout>
+        </ScrollView>
+
+    </RelativeLayout>
+</RelativeLayout>

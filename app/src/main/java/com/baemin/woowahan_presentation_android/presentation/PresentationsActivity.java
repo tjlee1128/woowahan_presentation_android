@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baemin.woowahan_presentation_android.R;
+import com.baemin.woowahan_presentation_android.base.WPMessageDialog;
 import com.baemin.woowahan_presentation_android.model.PresentationModel;
 import com.baemin.woowahan_presentation_android.model.PresentationsModel;
 import com.baemin.woowahan_presentation_android.network.PresentationService;
@@ -44,6 +45,7 @@ public class PresentationsActivity extends AppCompatActivity {
     @Bind(R.id.activity_presentations_empty_rl)
     RelativeLayout presentationsEmptyView;
     private PresentationsModel mPresentationsModel;
+    private WPMessageDialog messageDialog;
     private Callback<PresentationsModel> mCallback = new Callback<PresentationsModel>() {
         @Override
         public void onResponse(Response<PresentationsModel> response, Retrofit retrofit) {
@@ -57,7 +59,27 @@ public class PresentationsActivity extends AppCompatActivity {
             presentationsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(PresentationsActivity.this, PresentationActivity.class);
+                    Intent intent = null;
+
+                    if (mPresentationsModel.getRows().get(position).getVideo() == null) {
+                        intent = new Intent(PresentationsActivity.this, PresentationOnlyPdfActivity.class);
+                    }
+
+                    if (mPresentationsModel.getRows().get(position).getPdf() == null) {
+                        intent = new Intent(PresentationsActivity.this, PresentationOnlyVideoActivity.class);
+                    }
+
+                    if (mPresentationsModel.getRows().get(position).getVideo() != null && mPresentationsModel.getRows().get(position).getPdf() != null) {
+                        intent = new Intent(PresentationsActivity.this, PresentationActivity.class);
+                    } else {
+                        messageDialog = new WPMessageDialog(PresentationsActivity.this, "ERROR", "데이터를 불러오는데 실패했습니다.\n다시 시도해주세요", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                messageDialog.dismiss();
+                            }
+                        });
+                    }
+
                     intent.putExtra(Constants.EXTRA_PRESENTATION_ID, mPresentationsModel.getRows().get(position).getId());
                     intent.putExtra(Constants.EXTRA_PRESENTATION_NAME, mPresentationsModel.getRows().get(position).getTitle());
                     startActivity(intent);

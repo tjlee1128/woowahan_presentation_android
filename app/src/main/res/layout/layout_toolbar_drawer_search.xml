@@ -8,6 +8,7 @@
         android:layout_height="match_parent"
         android:background="@color/toolbar_background">
         <RelativeLayout
+            android:id="@+id/layout_toolbar_drawer_search_drawer_rl"
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
@@ -18,6 +19,7 @@
                 android:background="@drawable/ic_menu_white_24dp"/>
         </RelativeLayout>
         <RelativeLayout
+            android:id="@+id/layout_toolbar_drawer_search_search_rl"
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"

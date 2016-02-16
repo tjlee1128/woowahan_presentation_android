@@ -24,24 +24,30 @@
         <activity
             android:name=".main.MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.PresentationsActivity"
             android:label="@string/title_activity_presentations"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".user.SignInActivity"
             android:label="@string/title_activity_sign_in"
             android:screenOrientation="portrait"
-            android:theme="@style/MyTheme"></activity>
+            android:theme="@style/MyTheme" />
         <activity
             android:name=".user.SignUpActivity"
             android:label="@string/title_activity_sign_up"
             android:screenOrientation="portrait"
-            android:theme="@style/MyTheme"></activity>
+            android:theme="@style/MyTheme" />
         <activity
             android:name=".presentation.PresentationActivity"
-            android:label="@string/title_activity_presentation"></activity>
+            android:label="@string/title_activity_presentation" />
+        <activity
+            android:name=".presentation.PresentationOnlyVideoActivity"
+            android:label="@string/title_activity_presentation_only_video" />
+        <activity
+            android:name=".presentation.PresentationOnlyPdfActivity"
+            android:label="@string/title_activity_presentation_only_pdf"></activity>
     </application>
 
 </manifest>
