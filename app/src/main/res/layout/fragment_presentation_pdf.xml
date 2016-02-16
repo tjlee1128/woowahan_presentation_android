@@ -46,7 +46,7 @@
                     android:background="@drawable/ic_chevron_right_white_24dp"/>
             </RelativeLayout>
         </RelativeLayout>
-        <android.support.v4.view.ViewPager
+        <com.baemin.woowahan_presentation_android.base.ViewPagerFixed
             android:id="@+id/fragment_presentation_pdf_vp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

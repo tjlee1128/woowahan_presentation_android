@@ -78,6 +78,15 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.unbind(this);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     private void initializeToolBar() {
         ((RelativeLayout) toolbarView.findViewById(R.id.layout_toolbar_drawer_search_drawer_rl)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,8 +110,8 @@ public class MainActivity extends AppCompatActivity {
         teamTextView.setText(PreferencesManager.getInstance().getUser().getTeam_name());
 
         List<String> drawerList = new ArrayList<>();
-        drawerList.add("내가 작성한 글");
-        drawerList.add("내가 댓글을 작성한 글");
+        drawerList.add("올린 자료");
+        drawerList.add("관심 자료");
 
         drawerListView.addHeaderView(drawerHeaderView);
         drawerListView.setAdapter(new MainDrawerAdapter(MainActivity.this, drawerList));

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baemin.woowahan_presentation_android.R;
+import com.baemin.woowahan_presentation_android.base.ViewPagerFixed;
 import com.baemin.woowahan_presentation_android.model.ImageModel;
 import com.baemin.woowahan_presentation_android.model.PresentationModel;
 import com.baemin.woowahan_presentation_android.network.PresentationService;
@@ -43,7 +44,7 @@ public class PresentationOnlyPdfActivity extends AppCompatActivity {
 
     // ViewPager
     @Bind(R.id.activity_presentation_only_pdf_vp)
-    ViewPager pdfViewPager;
+    ViewPagerFixed pdfViewPager;
     private PresentationPdfPagerAdapter pdfPagerAdapter;
     @Bind(R.id.activity_presentation_only_pdf_chevronleft_rl)
     RelativeLayout leftChevronLayout;

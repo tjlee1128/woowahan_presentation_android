@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:id="@+id/activity_presentation_land_vv_rl"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:background="@color/white"
+                android:gravity="center">
+                <VideoView
+                    android:id="@+id/activity_presentation_land_vv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+                <FrameLayout
+                    android:id="@+id/activity_presentation_land_holder"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray">
+                </FrameLayout>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/activity_presentation_land_vp_rl"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3">
+                <com.baemin.woowahan_presentation_android.base.ViewPagerFixed
+                    android:id="@+id/activity_presentation_land_vp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/activity_presentation_land_mode_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/toolbar_background"
+            android:text="MODE"
+            android:background="@android:color/transparent"/>
+    </RelativeLayout>
+</RelativeLayout>

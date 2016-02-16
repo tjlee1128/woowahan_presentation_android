@@ -32,6 +32,13 @@
                 android:id="@+id/activity_presentation_only_video_vv"
                 android:layout_width="match_parent"
                 android:layout_height="230dp" />
+
+            <FrameLayout
+                android:id="@+id/activity_presentation_only_video_holder"
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:background="@color/black">
+            </FrameLayout>
         </RelativeLayout>
 
         <ScrollView

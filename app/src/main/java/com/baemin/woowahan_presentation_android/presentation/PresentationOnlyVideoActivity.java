@@ -42,6 +42,8 @@ public class PresentationOnlyVideoActivity extends AppCompatActivity {
     // video view
     @Bind(R.id.activity_presentation_only_video_vv)
     VideoView videoView;
+    @Bind(R.id.activity_presentation_only_video_holder)
+    View placeholder;
     private MediaController mediaController;
 
     @Bind(R.id.activity_presentation_only_video_title_tv)
@@ -73,7 +75,7 @@ public class PresentationOnlyVideoActivity extends AppCompatActivity {
             videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
-
+                    placeholder.setVisibility(View.GONE);
                 }
             });
 
@@ -137,6 +139,12 @@ public class PresentationOnlyVideoActivity extends AppCompatActivity {
         } else {
 
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        placeholder.setVisibility(View.VISIBLE);
     }
 
     @Override

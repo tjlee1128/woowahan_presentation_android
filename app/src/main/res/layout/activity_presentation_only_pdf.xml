@@ -68,7 +68,7 @@
             </RelativeLayout>
 
             <!-- VIEW PAGER -->
-            <android.support.v4.view.ViewPager
+            <com.baemin.woowahan_presentation_android.base.ViewPagerFixed
                 android:id="@+id/activity_presentation_only_pdf_vp"
                 android:layout_width="match_parent"
                 android:layout_height="230dp"

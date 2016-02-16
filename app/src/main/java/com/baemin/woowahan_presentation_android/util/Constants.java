@@ -13,5 +13,7 @@ public class Constants {
     public final static String EXTRA_CATEGORY_NAME = "com.baemin.woowahan_presentation_android.EXTRA_CATEGORY_NAME";
     public final static String EXTRA_PRESENTATION_ID = "com.baemin.woowahan_presentation_android.EXTRA_PRESENTATION_ID";
     public final static String EXTRA_PRESENTATION_NAME = "com.baemin.woowahan_presentation_android.EXTRA_PRESENTATION_NAME";
+    public final static String EXTRA_PRESENTATION_ACTIVITY_DIRECTION = "com.baemin.woowahan_presentation_android.EXTRA_PRESENTATION_ACTIVITY_DIRECTION";
+    public final static String EXTRA_PRESENTATION_MODEL = "com.baemin.woowahan_presentation_android.EXTRA_PRESENTATION_MODEL";
     public final static String EXTRA_IMAGES = "com.baemin.woowahan_presentation_android.EXTRA_IMAGES";
 }

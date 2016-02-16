@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.baemin.woowahan_presentation_android.presentation.PresentationVideoFragment">
 
     <RelativeLayout
@@ -17,6 +18,12 @@
                 android:id="@+id/fragment_presentation_video_vv"
                 android:layout_width="match_parent"
                 android:layout_height="230dp" />
+            <FrameLayout
+                android:id="@+id/fragment_presentation_video_holder"
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:background="@color/black">
+            </FrameLayout>
         </RelativeLayout>
 
         <ScrollView
@@ -92,11 +99,14 @@
                     android:padding="12dp"
                     android:gravity="center_vertical"
                     android:layout_below="@+id/fragment_presentation_divider">
-                    <ImageView
+                    <com.makeramen.roundedimageview.RoundedImageView
                         android:id="@+id/fragment_presentation_user_image_iv"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
-                        android:scaleType="fitCenter"/>
+                        app:riv_corner_radius="0.5dp"
+                        app:riv_border_width="0.5dp"
+                        app:riv_border_color="@color/black"
+                        app:riv_mutate_background="true"/>
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

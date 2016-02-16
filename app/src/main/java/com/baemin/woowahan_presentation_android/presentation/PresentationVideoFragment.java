@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -16,6 +15,7 @@ import com.baemin.woowahan_presentation_android.R;
 import com.baemin.woowahan_presentation_android.model.PresentationModel;
 import com.baemin.woowahan_presentation_android.util.Constants;
 import com.baemin.woowahan_presentation_android.util.DateConvertor;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
 public class PresentationVideoFragment extends Fragment {
@@ -25,6 +25,7 @@ public class PresentationVideoFragment extends Fragment {
 
     // video view
     private VideoView videoView;
+    private View placeholder;
     private MediaController mediaController;
 
     public PresentationVideoFragment() {
@@ -52,7 +53,9 @@ public class PresentationVideoFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_presentation_video, container, false);
 
+        placeholder = view.findViewById(R.id.fragment_presentation_video_holder);
         videoView = (VideoView) view.findViewById(R.id.fragment_presentation_video_vv);
+//        videoView.setZOrderOnTop(false);
         Uri uri= Uri.parse(Constants.API_SERVER_BASE_URL + presentationModel.getVideo().getUrl());
         videoView.setVideoURI(uri);
         mediaController = new MediaController(getActivity());
@@ -61,7 +64,7 @@ public class PresentationVideoFragment extends Fragment {
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
-
+                placeholder.setVisibility(View.GONE);
             }
         });
 
@@ -82,9 +85,20 @@ public class PresentationVideoFragment extends Fragment {
 
         Picasso.with(getActivity())
                 .load(Constants.API_SERVER_BASE_URL + presentationModel.getUser().getImage().getThumb_url())
-                .into((ImageView) view.findViewById(R.id.fragment_presentation_user_image_iv));
+                .into((RoundedImageView) view.findViewById(R.id.fragment_presentation_user_image_iv));
         ((TextView) view.findViewById(R.id.fragment_presentation_user_tv)).setText(presentationModel.getUser().getFullname());
         ((TextView) view.findViewById(R.id.fragment_presentation_team_name_tv)).setText(presentationModel.getUser().getTeam_name());
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        placeholder.setVisibility(View.VISIBLE);
     }
 }

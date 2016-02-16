@@ -13,13 +13,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.baemin.woowahan_presentation_android.R;
+import com.baemin.woowahan_presentation_android.base.ViewPagerFixed;
 import com.baemin.woowahan_presentation_android.model.PresentationModel;
 
 public class PresentationPdfFragment extends Fragment implements View.OnClickListener {
     private static final String ARG_PDF = "PDF";
 
     private PresentationModel presentationModel;
-    private ViewPager pdfViewPager;
+    private ViewPagerFixed pdfViewPager;
     private PresentationPdfPagerAdapter pdfPagerAdapter;
     private RelativeLayout leftChevronLayout;
     private RelativeLayout rightChevronLayout;
@@ -56,7 +57,7 @@ public class PresentationPdfFragment extends Fragment implements View.OnClickLis
         leftChevronLayout.setOnClickListener(this);
         rightChevronLayout.setOnClickListener(this);
         titleTextView = (TextView) view.findViewById(R.id.fragment_presentation_pdf_title_tv);
-        pdfViewPager = (ViewPager) view.findViewById(R.id.fragment_presentation_pdf_vp);
+        pdfViewPager = (ViewPagerFixed) view.findViewById(R.id.fragment_presentation_pdf_vp);
         pdfPagerAdapter = new PresentationPdfPagerAdapter(getActivity(), presentationModel.getImages());
         pdfViewPager.setAdapter(pdfPagerAdapter);
         pdfViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
