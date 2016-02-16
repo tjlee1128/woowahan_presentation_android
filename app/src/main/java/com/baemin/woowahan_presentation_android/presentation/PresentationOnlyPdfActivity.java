@@ -36,6 +36,7 @@ import retrofit.Retrofit;
 public class PresentationOnlyPdfActivity extends AppCompatActivity {
 
     private int presentation_id;
+    private String presentation_name;
     private PresentationModel presentationModel;
 
     // ToolBar
@@ -53,6 +54,7 @@ public class PresentationOnlyPdfActivity extends AppCompatActivity {
     @Bind(R.id.activity_presentation_only_pdf_pagertitle_tv)
     TextView pagertitleTextView;
 
+    // Content
     @Bind(R.id.activity_presentation_only_pdf_title_tv)
     TextView titleTextView;
     @Bind(R.id.activity_presentation_only_pdf_subtitle_tv)
@@ -68,52 +70,82 @@ public class PresentationOnlyPdfActivity extends AppCompatActivity {
     @Bind(R.id.activity_presentation_only_pdf_user_image_iv)
     RoundedImageView userImageView;
 
+    // 가로방향
+    private ViewPagerFixed landViewPager;
+    private TextView landTitleTextView;
+
     // network
     private Callback<PresentationModel> callback = new Callback<PresentationModel>() {
         @Override
         public void onResponse(Response<PresentationModel> response, Retrofit retrofit) {
             presentationModel = response.body();
 
-            leftChevronLayout.setOnClickListener(onClickListener);
-            rightChevronLayout.setOnClickListener(onClickListener);
-            pdfPagerAdapter = new PresentationPdfPagerAdapter(PresentationOnlyPdfActivity.this, presentationModel.getImages());
-            pdfViewPager.setAdapter(pdfPagerAdapter);
-            pdfViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                @Override
-                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            // 세로방향
+            if (PresentationOnlyPdfActivity.this.getResources().getConfiguration().orientation == 1) {
+                leftChevronLayout.setOnClickListener(onClickListener);
+                rightChevronLayout.setOnClickListener(onClickListener);
+                pdfPagerAdapter = new PresentationPdfPagerAdapter(PresentationOnlyPdfActivity.this, presentationModel.getImages());
+                pdfViewPager.setAdapter(pdfPagerAdapter);
+                pdfViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                    @Override
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+                    }
+
+                    @Override
+                    public void onPageSelected(int position) {
+                        pagertitleTextView.setText("" + (position + 1) + "/" + presentationModel.getImages().size());
+                    }
+
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+
+                    }
+                });
+                pagertitleTextView.setText("총 " + presentationModel.getImages().size() + "pages");
+
+                titleTextView.setText(presentationModel.getTitle());
+                subtitleTextView.setText(presentationModel.getSubtitle());
+
+                String updatedAt = "";
+                try {
+                    updatedAt = DateConvertor.convertToDate(presentationModel.getUpdated_at());
+                    updatedAt = DateConvertor.utcToLocaltime(updatedAt);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+                updatedAtTextView.setText("modified on " + updatedAt);
+                contentTextView.setText(presentationModel.getContent());
 
-                @Override
-                public void onPageSelected(int position) {
-                    pagertitleTextView.setText("" + (position + 1) + "/" + presentationModel.getImages().size());
-                }
-
-                @Override
-                public void onPageScrollStateChanged(int state) {
-
-                }
-            });
-            pagertitleTextView.setText("총 " + presentationModel.getImages().size() + "pages");
-
-            titleTextView.setText(presentationModel.getTitle());
-            subtitleTextView.setText(presentationModel.getSubtitle());
-
-            String updatedAt = "";
-            try {
-                updatedAt = DateConvertor.convertToDate(presentationModel.getUpdated_at());
-                updatedAt = DateConvertor.utcToLocaltime(updatedAt);
-            } catch (Exception e) {
-                e.printStackTrace();
+                Picasso.with(PresentationOnlyPdfActivity.this)
+                        .load(Constants.API_SERVER_BASE_URL + presentationModel.getUser().getImage().getThumb_url())
+                        .into(userImageView);
+                userTextView.setText(presentationModel.getUser().getFullname());
+                teamnameTextView.setText(presentationModel.getUser().getTeam_name());
             }
-            updatedAtTextView.setText("modified on " + updatedAt);
-            contentTextView.setText(presentationModel.getContent());
+            // 가로방향
+            else {
+                pdfPagerAdapter = new PresentationPdfPagerAdapter(PresentationOnlyPdfActivity.this, presentationModel.getImages());
+                landViewPager.setAdapter(pdfPagerAdapter);
+                landTitleTextView.setText("1/" + presentationModel.getImages().size());
 
-            Picasso.with(PresentationOnlyPdfActivity.this)
-                    .load(Constants.API_SERVER_BASE_URL + presentationModel.getUser().getImage().getThumb_url())
-                    .into(userImageView);
-            userTextView.setText(presentationModel.getUser().getFullname());
-            teamnameTextView.setText(presentationModel.getUser().getTeam_name());
+                landViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                    @Override
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                    }
+
+                    @Override
+                    public void onPageSelected(int position) {
+                        landTitleTextView.setText("" + (position + 1) + "/" + presentationModel.getImages().size());
+                    }
+
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+
+                    }
+                });
+            }
 
             progressDialog.dismiss();
         }
@@ -133,10 +165,112 @@ public class PresentationOnlyPdfActivity extends AppCompatActivity {
         this.overridePendingTransition(R.anim.start_right_left_enter, R.anim.start_right_left_exit);
         setContentView(R.layout.activity_presentation_only_pdf);
 
-        ButterKnife.bind(this);
 
-        initializeToolBar(getIntent().getExtras().getString(Constants.EXTRA_PRESENTATION_NAME));
-        presentation_id = getIntent().getExtras().getInt(Constants.EXTRA_PRESENTATION_ID);
+        // 세로방향
+        if (PresentationOnlyPdfActivity.this.getResources().getConfiguration().orientation == 1) {
+            // 처음 로드되는 방향이 세로일 때
+            ButterKnife.bind(this);
+            if (savedInstanceState == null) {
+                presentation_id = getIntent().getExtras().getInt(Constants.EXTRA_PRESENTATION_ID);
+                presentation_name = getIntent().getExtras().getString(Constants.EXTRA_PRESENTATION_NAME);
+                initializeToolBar(presentation_name);
+            }
+            // 가로에서 세로로 왔을 때
+            else {
+                presentationModel = (PresentationModel) savedInstanceState.getSerializable(Constants.EXTRA_PRESENTATION_MODEL);
+                initializeToolBar(presentationModel.getTitle());
+                pdfPagerAdapter = new PresentationPdfPagerAdapter(PresentationOnlyPdfActivity.this, presentationModel.getImages());
+                pdfViewPager.setAdapter(pdfPagerAdapter);
+
+
+                leftChevronLayout.setOnClickListener(onClickListener);
+                rightChevronLayout.setOnClickListener(onClickListener);
+                pdfViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                    @Override
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                    }
+
+                    @Override
+                    public void onPageSelected(int position) {
+                        pagertitleTextView.setText("" + (position + 1) + "/" + presentationModel.getImages().size());
+                    }
+
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+
+                    }
+                });
+                pagertitleTextView.setText("총 " + presentationModel.getImages().size() + "pages");
+
+                titleTextView.setText(presentationModel.getTitle());
+                subtitleTextView.setText(presentationModel.getSubtitle());
+
+                String updatedAt = "";
+                try {
+                    updatedAt = DateConvertor.convertToDate(presentationModel.getUpdated_at());
+                    updatedAt = DateConvertor.utcToLocaltime(updatedAt);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                updatedAtTextView.setText("modified on " + updatedAt);
+                contentTextView.setText(presentationModel.getContent());
+
+                Picasso.with(PresentationOnlyPdfActivity.this)
+                        .load(Constants.API_SERVER_BASE_URL + presentationModel.getUser().getImage().getThumb_url())
+                        .into(userImageView);
+                userTextView.setText(presentationModel.getUser().getFullname());
+                teamnameTextView.setText(presentationModel.getUser().getTeam_name());
+            }
+        }
+
+        // 가로방향
+        else {
+            landViewPager = (ViewPagerFixed) findViewById(R.id.activity_presentation_land_only_pdf_vp);
+            landTitleTextView = (TextView) findViewById(R.id.activity_presentation_land_only_pdf_tv);
+
+            // 처음 로드되는 방향이 가로일 때
+            if (savedInstanceState == null) {
+                presentation_id = getIntent().getExtras().getInt(Constants.EXTRA_PRESENTATION_ID);
+                presentation_name = getIntent().getExtras().getString(Constants.EXTRA_PRESENTATION_NAME);
+            }
+            // 세로에서 가로로 왔을 때
+            else {
+                presentationModel = (PresentationModel) savedInstanceState.getSerializable(Constants.EXTRA_PRESENTATION_MODEL);
+
+                pdfPagerAdapter = new PresentationPdfPagerAdapter(PresentationOnlyPdfActivity.this, presentationModel.getImages());
+                landViewPager.setAdapter(pdfPagerAdapter);
+                landTitleTextView.setText("1/" + presentationModel.getImages().size());
+
+                landViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                    @Override
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                    }
+
+                    @Override
+                    public void onPageSelected(int position) {
+                        landTitleTextView.setText("" + (position + 1) + "/" + presentationModel.getImages().size());
+                    }
+
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+
+                    }
+                });
+            }
+        }
+
+
+
+
+
+
+
+//        ButterKnife.bind(this);
+//
+//        initializeToolBar(getIntent().getExtras().getString(Constants.EXTRA_PRESENTATION_NAME));
+//        presentation_id = getIntent().getExtras().getInt(Constants.EXTRA_PRESENTATION_ID);
     }
 
     @Override
@@ -169,6 +303,14 @@ public class PresentationOnlyPdfActivity extends AppCompatActivity {
     public void finish() {
         super.finish();
         this.overridePendingTransition(R.anim.end_right_left_enter, R.anim.end_right_left_exit);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        if (presentationModel != null) {
+            outState.putSerializable(Constants.EXTRA_PRESENTATION_MODEL, presentationModel);
+        }
+        super.onSaveInstanceState(outState);
     }
 
     private void initializeToolBar(String title) {

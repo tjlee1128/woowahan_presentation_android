@@ -45,9 +45,11 @@
             android:label="@string/title_activity_presentation" />
         <activity
             android:name=".presentation.PresentationOnlyVideoActivity"
+            android:configChanges="keyboardHidden|orientation"
             android:label="@string/title_activity_presentation_only_video" />
         <activity
             android:name=".presentation.PresentationOnlyPdfActivity"
+            android:configChanges="keyboardHidden|orientation"
             android:label="@string/title_activity_presentation_only_pdf" />
     </application>
 

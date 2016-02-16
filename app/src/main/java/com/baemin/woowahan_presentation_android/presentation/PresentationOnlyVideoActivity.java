@@ -33,6 +33,7 @@ import retrofit.Retrofit;
 public class PresentationOnlyVideoActivity extends AppCompatActivity {
 
     private int presentation_id;
+    private String presentation_name;
     private PresentationModel presentationModel;
 
     // ToolBar
@@ -61,42 +62,64 @@ public class PresentationOnlyVideoActivity extends AppCompatActivity {
     @Bind(R.id.activity_presentation_only_video_user_image_iv)
     RoundedImageView userImageView;
 
+    // 가로방향
+    private VideoView landVideoView;
+    private View landPlaceHolder;
+
+
     // network
     private Callback<PresentationModel> callback = new Callback<PresentationModel>() {
         @Override
         public void onResponse(Response<PresentationModel> response, Retrofit retrofit) {
             presentationModel = response.body();
 
-            Uri uri= Uri.parse(Constants.API_SERVER_BASE_URL + presentationModel.getVideo().getUrl());
-            videoView.setVideoURI(uri);
-            mediaController = new MediaController(PresentationOnlyVideoActivity.this);
-            mediaController.setAnchorView(videoView);
-            videoView.setMediaController(mediaController);
-            videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mp) {
-                    placeholder.setVisibility(View.GONE);
+            // 세로방향
+            if (PresentationOnlyVideoActivity.this.getResources().getConfiguration().orientation == 1) {
+                Uri uri= Uri.parse(Constants.API_SERVER_BASE_URL + presentationModel.getVideo().getUrl());
+                videoView.setVideoURI(uri);
+                mediaController = new MediaController(PresentationOnlyVideoActivity.this);
+                mediaController.setAnchorView(videoView);
+                videoView.setMediaController(mediaController);
+                videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        placeholder.setVisibility(View.GONE);
+                    }
+                });
+
+                titleTextView.setText(presentationModel.getTitle());
+                subtitleTextView.setText(presentationModel.getSubtitle());
+
+                String updatedAt = "";
+                try {
+                    updatedAt = DateConvertor.convertToDate(presentationModel.getUpdated_at());
+                    updatedAt = DateConvertor.utcToLocaltime(updatedAt);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            });
+                updatedAtTextView.setText("modified on " + updatedAt);
+                contentTextView.setText(presentationModel.getContent());
 
-            titleTextView.setText(presentationModel.getTitle());
-            subtitleTextView.setText(presentationModel.getSubtitle());
-
-            String updatedAt = "";
-            try {
-                updatedAt = DateConvertor.convertToDate(presentationModel.getUpdated_at());
-                updatedAt = DateConvertor.utcToLocaltime(updatedAt);
-            } catch (Exception e) {
-                e.printStackTrace();
+                Picasso.with(PresentationOnlyVideoActivity.this)
+                        .load(Constants.API_SERVER_BASE_URL + presentationModel.getUser().getImage().getThumb_url())
+                        .into(userImageView);
+                userTextView.setText(presentationModel.getUser().getFullname());
+                teamnameTextView.setText(presentationModel.getUser().getTeam_name());
             }
-            updatedAtTextView.setText("modified on " + updatedAt);
-            contentTextView.setText(presentationModel.getContent());
-
-            Picasso.with(PresentationOnlyVideoActivity.this)
-                    .load(Constants.API_SERVER_BASE_URL + presentationModel.getUser().getImage().getThumb_url())
-                    .into(userImageView);
-            userTextView.setText(presentationModel.getUser().getFullname());
-            teamnameTextView.setText(presentationModel.getUser().getTeam_name());
+            // 가로방향
+            else {
+                Uri uri= Uri.parse(Constants.API_SERVER_BASE_URL + presentationModel.getVideo().getUrl());
+                videoView.setVideoURI(uri);
+                mediaController = new MediaController(PresentationOnlyVideoActivity.this);
+                mediaController.setAnchorView(videoView);
+                videoView.setMediaController(mediaController);
+                videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        landPlaceHolder.setVisibility(View.GONE);
+                    }
+                });
+            }
 
             progressDialog.dismiss();
         }
@@ -115,10 +138,65 @@ public class PresentationOnlyVideoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.overridePendingTransition(R.anim.start_right_left_enter, R.anim.start_right_left_exit);
         setContentView(R.layout.activity_presentation_only_video);
-        ButterKnife.bind(this);
 
-        initializeToolBar(getIntent().getExtras().getString(Constants.EXTRA_PRESENTATION_NAME));
-        presentation_id = getIntent().getExtras().getInt(Constants.EXTRA_PRESENTATION_ID);
+
+        // 세로방향
+        if (PresentationOnlyVideoActivity.this.getResources().getConfiguration().orientation == 1) {
+            // 처음 로드되는 방향이 세로일 때
+            ButterKnife.bind(this);
+            if (savedInstanceState == null) {
+                presentation_id = getIntent().getExtras().getInt(Constants.EXTRA_PRESENTATION_ID);
+                presentation_name = getIntent().getExtras().getString(Constants.EXTRA_PRESENTATION_NAME);
+                initializeToolBar(presentation_name);
+            }
+            // 가로에서 세로로 왔을 때
+            else {
+                presentationModel = (PresentationModel) savedInstanceState.getSerializable(Constants.EXTRA_PRESENTATION_MODEL);
+                initializeToolBar(presentationModel.getTitle());
+            }
+        }
+
+        // 가로방향
+        else {
+            videoView = (VideoView) findViewById(R.id.activity_presentation_land_only_video_vv);
+            landPlaceHolder = findViewById(R.id.activity_presentation_land_only_video_hodler);
+
+            // 처음 로드되는 방향이 가로일 때
+            if (savedInstanceState == null) {
+                presentation_id = getIntent().getExtras().getInt(Constants.EXTRA_PRESENTATION_ID);
+                presentation_name = getIntent().getExtras().getString(Constants.EXTRA_PRESENTATION_NAME);
+            }
+            // 세로에서 가로로 왔을 때
+            else {
+                presentationModel = (PresentationModel) savedInstanceState.getSerializable(Constants.EXTRA_PRESENTATION_MODEL);
+
+                Uri uri= Uri.parse(Constants.API_SERVER_BASE_URL + presentationModel.getVideo().getUrl());
+                videoView.setVideoURI(uri);
+                mediaController = new MediaController(PresentationOnlyVideoActivity.this);
+                mediaController.setAnchorView(videoView);
+                videoView.setMediaController(mediaController);
+                videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        landPlaceHolder.setVisibility(View.GONE);
+                    }
+                });
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+//        ButterKnife.bind(this);
+//
+//        initializeToolBar(getIntent().getExtras().getString(Constants.EXTRA_PRESENTATION_NAME));
+//        presentation_id = getIntent().getExtras().getInt(Constants.EXTRA_PRESENTATION_ID);
     }
 
     @Override
@@ -144,7 +222,7 @@ public class PresentationOnlyVideoActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        placeholder.setVisibility(View.VISIBLE);
+//        placeholder.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -157,6 +235,14 @@ public class PresentationOnlyVideoActivity extends AppCompatActivity {
     public void finish() {
         super.finish();
         this.overridePendingTransition(R.anim.end_right_left_enter, R.anim.end_right_left_exit);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        if (presentationModel != null) {
+            outState.putSerializable(Constants.EXTRA_PRESENTATION_MODEL, presentationModel);
+        }
+        super.onSaveInstanceState(outState);
     }
 
     private void initializeToolBar(String title) {

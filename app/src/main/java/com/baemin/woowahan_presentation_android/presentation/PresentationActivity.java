@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
@@ -39,7 +40,6 @@ public class PresentationActivity extends AppCompatActivity {
 
     private int presentation_id;
     private String presentation_name;
-    private int currentLayoutDirection;
 
     // ToolBar
     @Bind(R.id.activity_presentation_toolbar_include)
@@ -70,9 +70,53 @@ public class PresentationActivity extends AppCompatActivity {
         public void onResponse(Response<PresentationModel> response, Retrofit retrofit) {
             presentationModel = response.body();
 
-            presentationFragmentPagerAdapter = new PresentationFragmentPagerAdapter(getSupportFragmentManager(), PresentationActivity.this, presentationModel);
-            presentationViewPager.setAdapter(presentationFragmentPagerAdapter);
-            presentationTabLayout.setupWithViewPager(presentationViewPager);
+            // 세로방향
+            if (PresentationActivity.this.getResources().getConfiguration().orientation == 1) {
+                presentationFragmentPagerAdapter = new PresentationFragmentPagerAdapter(getSupportFragmentManager(), PresentationActivity.this, presentationModel);
+                presentationViewPager.setAdapter(presentationFragmentPagerAdapter);
+                presentationTabLayout.setupWithViewPager(presentationViewPager);
+            }
+            // 가로방향
+            else {
+                Uri uri= Uri.parse(Constants.API_SERVER_BASE_URL + presentationModel.getVideo().getUrl());
+                videoView.setVideoURI(uri);
+                mediaController = new MediaController(PresentationActivity.this);
+                mediaController.setAnchorView(videoView);
+                videoView.setMediaController(mediaController);
+                videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        placeholder.setVisibility(View.GONE);
+                    }
+                });
+
+                pdfPagerAdapter = new PresentationPdfPagerAdapter(PresentationActivity.this, presentationModel.getImages());
+                pdfViewPager.setAdapter(pdfPagerAdapter);
+
+                modeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        LinearLayout.LayoutParams videoLayoutParams = (LinearLayout.LayoutParams) videoLayout.getLayoutParams();
+                        LinearLayout.LayoutParams pdfLayoutParams = (LinearLayout.LayoutParams) pdfLayout.getLayoutParams();
+
+                        // 기본 -> 풀영상
+                        if (videoLayoutParams.weight == 7f && pdfLayoutParams.weight == 3f) {
+                            pdfLayout.setLayoutParams(new LinearLayout.LayoutParams(pdfLayoutParams.width, pdfLayoutParams.height, 0f));
+                        }
+
+                        // 풀영상 -> PDF
+                        if (videoLayoutParams.weight == 7f && pdfLayoutParams.weight == 0f) {
+                            videoLayout.setLayoutParams(new LinearLayout.LayoutParams(videoLayoutParams.width, videoLayoutParams.height, 0f));
+                            pdfLayout.setLayoutParams(new LinearLayout.LayoutParams(pdfLayoutParams.width, pdfLayoutParams.height, 3f));
+                        }
+
+                        // PDF -> 기본
+                        if (videoLayoutParams.weight == 0f && pdfLayoutParams.weight == 3f) {
+                            videoLayout.setLayoutParams(new LinearLayout.LayoutParams(videoLayoutParams.width, videoLayoutParams.height, 7f));
+                        }
+                    }
+                });
+            }
 
             progressDialog.dismiss();
         }
@@ -92,26 +136,42 @@ public class PresentationActivity extends AppCompatActivity {
         this.overridePendingTransition(R.anim.start_right_left_enter, R.anim.start_right_left_exit);
         setContentView(R.layout.activity_presentation);
 
-        if (savedInstanceState == null) {
+        // 세로방향
+        if (PresentationActivity.this.getResources().getConfiguration().orientation == 1) {
+            // 처음 로드되는 방향이 세로일 때
             ButterKnife.bind(this);
-            initializeToolBar(getIntent().getExtras().getString(Constants.EXTRA_PRESENTATION_NAME));
-            presentation_id = getIntent().getExtras().getInt(Constants.EXTRA_PRESENTATION_ID);
-        } else {
-            presentationModel = (PresentationModel) savedInstanceState.getSerializable(Constants.EXTRA_PRESENTATION_MODEL);
-            if (savedInstanceState.getInt(Constants.EXTRA_PRESENTATION_ACTIVITY_DIRECTION) == 1) {
-                ButterKnife.bind(this);
+            if (savedInstanceState == null) {
+                presentation_id = getIntent().getExtras().getInt(Constants.EXTRA_PRESENTATION_ID);
+                presentation_name = getIntent().getExtras().getString(Constants.EXTRA_PRESENTATION_NAME);
+                initializeToolBar(presentation_name);
+            }
+            // 가로에서 세로로 왔을 때
+            else {
+                presentationModel = (PresentationModel) savedInstanceState.getSerializable(Constants.EXTRA_PRESENTATION_MODEL);
                 initializeToolBar(presentationModel.getTitle());
-
                 presentationFragmentPagerAdapter = new PresentationFragmentPagerAdapter(getSupportFragmentManager(), PresentationActivity.this, presentationModel);
                 presentationViewPager.setAdapter(presentationFragmentPagerAdapter);
                 presentationTabLayout.setupWithViewPager(presentationViewPager);
-            } else {
-                videoLayout = findViewById(R.id.activity_presentation_land_vv_rl);
-                videoView = (VideoView) findViewById(R.id.activity_presentation_land_vv);
-                placeholder = findViewById(R.id.activity_presentation_land_holder);
-                pdfLayout = findViewById(R.id.activity_presentation_land_vp_rl);
-                pdfViewPager = (ViewPagerFixed) findViewById(R.id.activity_presentation_land_vp);
-                modeButton = (Button) findViewById(R.id.activity_presentation_land_mode_btn);
+            }
+        }
+
+        // 가로방향
+        else {
+            videoLayout = findViewById(R.id.activity_presentation_land_vv_rl);
+            videoView = (VideoView) findViewById(R.id.activity_presentation_land_vv);
+            placeholder = findViewById(R.id.activity_presentation_land_holder);
+            pdfLayout = findViewById(R.id.activity_presentation_land_vp_rl);
+            pdfViewPager = (ViewPagerFixed) findViewById(R.id.activity_presentation_land_vp);
+            modeButton = (Button) findViewById(R.id.activity_presentation_land_mode_btn);
+
+            // 처음 로드되는 방향이 가로일 때
+            if (savedInstanceState == null) {
+                presentation_id = getIntent().getExtras().getInt(Constants.EXTRA_PRESENTATION_ID);
+                presentation_name = getIntent().getExtras().getString(Constants.EXTRA_PRESENTATION_NAME);
+            }
+            // 세로에서 가로로 왔을 때
+            else {
+                presentationModel = (PresentationModel) savedInstanceState.getSerializable(Constants.EXTRA_PRESENTATION_MODEL);
 
                 Uri uri= Uri.parse(Constants.API_SERVER_BASE_URL + presentationModel.getVideo().getUrl());
                 videoView.setVideoURI(uri);
@@ -134,28 +194,24 @@ public class PresentationActivity extends AppCompatActivity {
                         LinearLayout.LayoutParams videoLayoutParams = (LinearLayout.LayoutParams) videoLayout.getLayoutParams();
                         LinearLayout.LayoutParams pdfLayoutParams = (LinearLayout.LayoutParams) pdfLayout.getLayoutParams();
 
-                        Log.i("weight", "video : " + videoLayoutParams.weight);
-                        Log.i("weight", "pdf : " + pdfLayoutParams.weight);
-
+                        // 기본 -> 풀영상
                         if (videoLayoutParams.weight == 7f && pdfLayoutParams.weight == 3f) {
                             pdfLayout.setLayoutParams(new LinearLayout.LayoutParams(pdfLayoutParams.width, pdfLayoutParams.height, 0f));
                         }
 
+                        // 풀영상 -> PDF
                         if (videoLayoutParams.weight == 7f && pdfLayoutParams.weight == 0f) {
-//                            videoLayoutParams.weight = 0;
-//                            pdfLayoutParams.weight = 3;
                             videoLayout.setLayoutParams(new LinearLayout.LayoutParams(videoLayoutParams.width, videoLayoutParams.height, 0f));
                             pdfLayout.setLayoutParams(new LinearLayout.LayoutParams(pdfLayoutParams.width, pdfLayoutParams.height, 3f));
                         }
 
+                        // PDF -> 기본
                         if (videoLayoutParams.weight == 0f && pdfLayoutParams.weight == 3f) {
-//                            videoLayoutParams.weight = 7;
                             videoLayout.setLayoutParams(new LinearLayout.LayoutParams(videoLayoutParams.width, videoLayoutParams.height, 7f));
                         }
                     }
                 });
             }
-
         }
     }
 
@@ -194,7 +250,6 @@ public class PresentationActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         if (presentationModel != null) {
-            outState.putInt(Constants.EXTRA_PRESENTATION_ACTIVITY_DIRECTION, PresentationActivity.this.getResources().getConfiguration().orientation);
             outState.putSerializable(Constants.EXTRA_PRESENTATION_MODEL, presentationModel);
         }
         super.onSaveInstanceState(outState);
