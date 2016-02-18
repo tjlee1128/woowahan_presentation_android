@@ -51,6 +51,9 @@
             android:name=".presentation.PresentationOnlyPdfActivity"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/title_activity_presentation_only_pdf" />
+        <activity
+            android:name=".search.SearchActivity"
+            android:label="@string/title_activity_search"></activity>
     </application>
 
 </manifest>

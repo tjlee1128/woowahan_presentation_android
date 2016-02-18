@@ -9,6 +9,10 @@ import java.util.List;
 public class PresentationModel implements Serializable {
 
     private int id;
+    private int comment_count;
+    private int view_count;
+    private int thumbs_count;
+    private boolean thumbs;
     private int category_id;
     private String title;
     private String subtitle;
@@ -19,9 +23,30 @@ public class PresentationModel implements Serializable {
     private VideoModel video;
     private PdfModel pdf;
     private List<ImageModel> images;
+    private List<CommentModel> comments;
 
     public int getId() {
         return id;
+    }
+
+    public void setComment_count(int comment_count) {
+        this.comment_count = comment_count;
+    }
+
+    public int getComment_count() {
+        return comment_count;
+    }
+
+    public int getView_count() {
+        return view_count;
+    }
+
+    public int getThumbs_count() {
+        return thumbs_count;
+    }
+
+    public boolean isThumbs() {
+        return thumbs;
     }
 
     public int getCategory_id() {
@@ -62,5 +87,9 @@ public class PresentationModel implements Serializable {
 
     public List<ImageModel> getImages() {
         return images;
+    }
+
+    public List<CommentModel> getComments() {
+        return comments;
     }
 }

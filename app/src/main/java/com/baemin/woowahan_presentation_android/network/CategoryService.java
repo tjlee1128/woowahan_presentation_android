@@ -1,5 +1,6 @@
 package com.baemin.woowahan_presentation_android.network;
 
+import com.baemin.woowahan_presentation_android.model.CategoriesModel;
 import com.baemin.woowahan_presentation_android.model.CategoryModel;
 
 import java.util.List;
@@ -13,4 +14,7 @@ import retrofit.http.GET;
 public interface CategoryService {
     @GET("api/categories.json")
     Call<List<CategoryModel>> loadCategories();
+
+    @GET("api/categories/presentations.json")
+    Call<CategoriesModel> loadCategoriesWithPresentation();
 }

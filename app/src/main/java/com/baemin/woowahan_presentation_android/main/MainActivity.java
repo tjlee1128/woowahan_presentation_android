@@ -5,6 +5,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 import com.baemin.woowahan_presentation_android.presentation.PresentationsActivity;
 import com.baemin.woowahan_presentation_android.R;
+import com.baemin.woowahan_presentation_android.search.SearchActivity;
 import com.baemin.woowahan_presentation_android.util.Constants;
 import com.baemin.woowahan_presentation_android.util.PreferencesManager;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -59,13 +61,14 @@ public class MainActivity extends AppCompatActivity {
         initializeToolBar();
         initializeDrawer();
 
-        categoriesListView.setAdapter(new MainCategoriesAdapter(MainActivity.this, PreferencesManager.getInstance().getCategories()));
+        categoriesListView.setAdapter(new MainCategoriesAdapter(MainActivity.this, PreferencesManager.getInstance().getCategories().getRows()));
         categoriesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, PresentationsActivity.class);
-                intent.putExtra(Constants.EXTRA_CATEGORY_ID, PreferencesManager.getInstance().getCategories().get(position).getId());
-                intent.putExtra(Constants.EXTRA_CATEGORY_NAME, PreferencesManager.getInstance().getCategories().get(position).getName());
+                intent.putExtra(Constants.EXTRA_PRESENTATION_COME_IN, "category");
+                intent.putExtra(Constants.EXTRA_CATEGORY_ID, PreferencesManager.getInstance().getCategories().getRows().get(position).getId());
+                intent.putExtra(Constants.EXTRA_CATEGORY_NAME, PreferencesManager.getInstance().getCategories().getRows().get(position).getName());
                 startActivity(intent);
             }
         });
@@ -94,6 +97,14 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+        ((RelativeLayout) toolbarView.findViewById(R.id.layout_toolbar_drawer_search_search_rl)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void initializeDrawer() {
@@ -111,9 +122,27 @@ public class MainActivity extends AppCompatActivity {
 
         List<String> drawerList = new ArrayList<>();
         drawerList.add("올린 자료");
-        drawerList.add("관심 자료");
+        drawerList.add("좋아한 자료");
 
         drawerListView.addHeaderView(drawerHeaderView);
         drawerListView.setAdapter(new MainDrawerAdapter(MainActivity.this, drawerList));
+        drawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    // Nothing
+                } else if (position == 1) {
+                    Intent intent = new Intent(MainActivity.this, PresentationsActivity.class);
+                    intent.putExtra(Constants.EXTRA_PRESENTATION_COME_IN, "user_presentations");
+                    intent.putExtra(Constants.EXTRA_ACCESS_TOKEN, PreferencesManager.getInstance().getAccessToken());
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(MainActivity.this, PresentationsActivity.class);
+                    intent.putExtra(Constants.EXTRA_PRESENTATION_COME_IN, "user_favorite_presentations");
+                    intent.putExtra(Constants.EXTRA_ACCESS_TOKEN, PreferencesManager.getInstance().getAccessToken());
+                    startActivity(intent);
+                }
+            }
+        });
     }
 }

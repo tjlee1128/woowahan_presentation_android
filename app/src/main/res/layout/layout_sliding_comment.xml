@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/layout_sliding_comment_divider1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/toolbar_background" />
+
+        <RelativeLayout
+            android:id="@+id/layout_sliding_comment_top_rl"
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:layout_below="@+id/layout_sliding_comment_divider1"
+            android:background="@color/white"
+            android:paddingLeft="12dp">
+
+            <TextView
+                android:id="@+id/layout_sliding_comment_title_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                tools:text="댓글"/>
+
+            <ImageView
+                android:id="@+id/layout_sliding_comment_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="12dp"
+                tools:background="@drawable/ic_arrow_drop_up_black_24dp" />
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/layout_sliding_comment_divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/layout_sliding_comment_top_rl"
+            android:background="@color/gray" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/layout_sliding_comment_divider2"
+            android:layout_marginBottom="50dp">
+
+            <ListView
+                android:id="@+id/layout_sliding_comment_lv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:divider="@null"
+                android:dividerHeight="2dp" />
+
+            <RelativeLayout
+                android:id="@+id/layout_sliding_comment_empty_rl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:gravity="center"
+                android:visibility="gone">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/layout_sliding_comment_empty_rl_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/ic_no_comment"/>
+                    <TextView
+                        android:id="@+id/layout_sliding_comment_empty_rl_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_below="@+id/layout_sliding_comment_empty_rl_iv"
+                        android:textColor="@color/black2"
+                        android:textSize="18sp"
+                        android:text="첫 번째 댓글을 남겨주세요!" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:descendantFocusability="beforeDescendants"
+            android:focusableInTouchMode="true">
+
+            <Button
+                android:id="@+id/layout_sliding_comment_input_btn"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="12dp"
+                android:text="입 력" />
+
+            <EditText
+                android:id="@+id/layout_sliding_comment_et"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_toLeftOf="@+id/layout_sliding_comment_input_btn"
+                android:background="@drawable/edittext_selector" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

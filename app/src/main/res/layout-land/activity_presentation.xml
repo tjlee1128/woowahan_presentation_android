@@ -12,7 +12,7 @@
                 android:id="@+id/activity_presentation_land_vv_rl"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="7"
+                android:layout_weight="6"
                 android:background="@color/white"
                 android:gravity="center">
                 <VideoView
@@ -30,7 +30,7 @@
                 android:id="@+id/activity_presentation_land_vp_rl"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="3">
+                android:layout_weight="4">
                 <com.baemin.woowahan_presentation_android.base.ViewPagerFixed
                     android:id="@+id/activity_presentation_land_vp"
                     android:layout_width="match_parent"
@@ -40,13 +40,14 @@
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <Button
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:background="@color/white">
+        <ImageButton
             android:id="@+id/activity_presentation_land_mode_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/toolbar_background"
-            android:text="MODE"
-            android:background="@android:color/transparent"/>
+            android:background="@drawable/ic_transform_black_24dp"/>
     </RelativeLayout>
 </RelativeLayout>

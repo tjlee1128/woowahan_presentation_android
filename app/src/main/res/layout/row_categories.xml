@@ -2,22 +2,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gray"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp">
+        android:background="@color/gray">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white">
+            android:layout_height="wrap_content">
             <RelativeLayout
                 android:id="@+id/row_categories_title_rl"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
                 android:background="@color/statusbar_background">
@@ -41,7 +41,10 @@
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="230dp"
+                android:background="@color/white"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
                 android:layout_below="@+id/row_categories_title_rl"
                 android:gravity="center">
                 <TextView
@@ -49,6 +52,17 @@
                     android:layout_height="wrap_content"
                     android:textSize="24sp"
                     android:text="썸네일이 들어갈 공간입니다"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:layout_below="@+id/row_categories_title_rl">
+                <com.baemin.woowahan_presentation_android.base.ViewPagerFixed
+                    android:id="@+id/row_categories_thumb_vp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"/>
             </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>

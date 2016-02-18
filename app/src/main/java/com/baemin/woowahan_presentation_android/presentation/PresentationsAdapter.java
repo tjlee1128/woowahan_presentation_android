@@ -62,6 +62,13 @@ public class PresentationsAdapter extends WPBaseAdapter<PresentationModel> {
             holder.isPdfTextView.setVisibility(View.VISIBLE);
         }
 
+        // comment count
+        holder.commentCountTextView.setText("" + list.get(position).getComment_count());
+        // view count
+        holder.viewCountTextView.setText("" + list.get(position).getView_count());
+        // thumbs count
+        holder.thumbCountTextView.setText("" + list.get(position).getThumbs_count());
+
         holder.titleTextView.setText(list.get(position).getTitle());
 
         String createdAt = "";
@@ -110,6 +117,15 @@ public class PresentationsAdapter extends WPBaseAdapter<PresentationModel> {
 
         @Bind(R.id.row_presentations_ispdf_tv)
         TextView isPdfTextView;
+
+        @Bind(R.id.row_presentations_question_tv)
+        TextView commentCountTextView;
+
+        @Bind(R.id.row_presentations_visibility_tv)
+        TextView viewCountTextView;
+
+        @Bind(R.id.row_presentations_thumb_tv)
+        TextView thumbCountTextView;
 
         @Bind(R.id.row_presentations_user_image_iv)
         RoundedImageView userImageView;

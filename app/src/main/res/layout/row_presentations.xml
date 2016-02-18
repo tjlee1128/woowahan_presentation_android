@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/row_presentations_presentation_top"
                 android:padding="12dp"
-                android:gravity="center">
+                android:gravity="center_vertical">
                 <TextView
                     android:id="@+id/row_presentations_presentation_subtitle_tv"
                     android:layout_width="wrap_content"
@@ -114,8 +114,10 @@
 
             <!-- PRESENTATION INFO -->
             <RelativeLayout
+                android:id="@+id/row_presentations_yncontent"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp">
                 <TextView
                     android:id="@+id/row_presentations_isvideo_tv"
                     android:layout_width="wrap_content"
@@ -137,12 +139,89 @@
                     android:textSize="10sp"
                     android:text="PDF"/>
             </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/row_presentations_yncontent">
+                <RelativeLayout
+                    android:id="@+id/row_presentations_question_rl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/row_presentations_question_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="2dp"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/ic_question_answer"/>
+                    <TextView
+                        android:id="@+id/row_presentations_question_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/row_presentations_question_iv"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/gray"
+                        android:textSize="10sp"
+                        tools:text="0"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/row_presentations_visibility_rl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/row_presentations_question_rl">
+
+                    <ImageView
+                        android:id="@+id/row_presentations_visibility_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="2dp"
+                        android:background="@drawable/ic_visibility" />
+
+                    <TextView
+                        android:id="@+id/row_presentations_visibility_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/row_presentations_visibility_iv"
+                        android:textColor="@color/gray"
+                        android:textSize="10sp"
+                        android:text="0" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/row_presentations_thumb_rl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/row_presentations_visibility_rl">
+
+                    <ImageView
+                        android:id="@+id/row_presentations_thumb_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="2dp"
+                        android:background="@drawable/ic_mini_thumb_up" />
+
+                    <TextView
+                        android:id="@+id/row_presentations_thumb_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/row_presentations_thumb_iv"
+                        android:textColor="@color/gray"
+                        android:textSize="10sp"
+                        android:text="0" />
+                </RelativeLayout>
+            </RelativeLayout>
 
             <!-- USER INFO -->
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:gravity="center_vertical">
 
 

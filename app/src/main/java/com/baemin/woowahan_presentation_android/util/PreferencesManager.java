@@ -3,6 +3,7 @@ package com.baemin.woowahan_presentation_android.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.baemin.woowahan_presentation_android.model.CategoriesModel;
 import com.baemin.woowahan_presentation_android.model.CategoryModel;
 import com.baemin.woowahan_presentation_android.model.TeamModel;
 import com.baemin.woowahan_presentation_android.model.UserModel;
@@ -48,7 +49,7 @@ public class PreferencesManager {
         return sInstance;
     }
 
-    public void setCategories(List<CategoryModel> categories) {
+    public void setCategories(CategoriesModel categories) {
         Gson gson = new Gson();
         String categoriesString = gson.toJson(categories);
         mPref.edit()
@@ -56,10 +57,10 @@ public class PreferencesManager {
                 .commit();
     }
 
-    public List<CategoryModel> getCategories() {
+    public CategoriesModel getCategories() {
         Gson gson = new Gson();
         String categoriesString = mPref.getString(KEY_CATEGORY, null);
-        Type type = new TypeToken<List<CategoryModel>>() {}.getType();
+        Type type = new TypeToken<CategoriesModel>() {}.getType();
 
         if (categoriesString != null) {
             return gson.fromJson(categoriesString, type);

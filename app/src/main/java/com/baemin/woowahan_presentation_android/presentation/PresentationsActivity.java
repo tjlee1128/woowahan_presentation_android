@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +20,10 @@ import com.baemin.woowahan_presentation_android.model.PresentationModel;
 import com.baemin.woowahan_presentation_android.model.PresentationsModel;
 import com.baemin.woowahan_presentation_android.network.PresentationService;
 import com.baemin.woowahan_presentation_android.network.ServiceGenerator;
+import com.baemin.woowahan_presentation_android.network.TeamService;
+import com.baemin.woowahan_presentation_android.network.UserService;
 import com.baemin.woowahan_presentation_android.util.Constants;
+import com.baemin.woowahan_presentation_android.util.PreferencesManager;
 
 import java.util.List;
 
@@ -33,7 +37,13 @@ import retrofit.Retrofit;
 
 public class PresentationsActivity extends AppCompatActivity {
 
+    private String activityComeIn;
+
+    private int user_id;
+    private int team_id;
+
     private int category_id;
+    private String access_token;
 
     // ToolBar
     @Bind(R.id.activity_presentations_toolbar_include)
@@ -42,17 +52,20 @@ public class PresentationsActivity extends AppCompatActivity {
     // List
     @Bind(R.id.activity_presentations_lv)
     ListView presentationsListView;
+    private PresentationsAdapter presentationsAdapter;
     @Bind(R.id.activity_presentations_empty_rl)
     RelativeLayout presentationsEmptyView;
     private PresentationsModel mPresentationsModel;
+    private List<PresentationModel> presentationModelList;
     private WPMessageDialog messageDialog;
     private Callback<PresentationsModel> mCallback = new Callback<PresentationsModel>() {
         @Override
         public void onResponse(Response<PresentationsModel> response, Retrofit retrofit) {
             mPresentationsModel = response.body();
-
-            presentationsListView.setAdapter(new PresentationsAdapter(PresentationsActivity.this, mPresentationsModel.getRows()));
-            if (mPresentationsModel.getRows().size() == 0) {
+            presentationModelList = mPresentationsModel.getRows();
+            presentationsAdapter = new PresentationsAdapter(PresentationsActivity.this, presentationModelList);
+            presentationsListView.setAdapter(presentationsAdapter);
+            if (presentationModelList.size() == 0) {
                 presentationsListView.setEmptyView(presentationsEmptyView);
             }
 
@@ -61,15 +74,15 @@ public class PresentationsActivity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent intent = null;
 
-                    if (mPresentationsModel.getRows().get(position).getVideo() == null) {
+                    if (presentationModelList.get(position).getVideo() == null) {
                         intent = new Intent(PresentationsActivity.this, PresentationOnlyPdfActivity.class);
                     }
 
-                    if (mPresentationsModel.getRows().get(position).getPdf() == null) {
+                    if (presentationModelList.get(position).getPdf() == null) {
                         intent = new Intent(PresentationsActivity.this, PresentationOnlyVideoActivity.class);
                     }
 
-                    if (mPresentationsModel.getRows().get(position).getVideo() != null && mPresentationsModel.getRows().get(position).getPdf() != null) {
+                    if (presentationModelList.get(position).getVideo() != null && presentationModelList.get(position).getPdf() != null) {
                         intent = new Intent(PresentationsActivity.this, PresentationActivity.class);
                     } else {
                         messageDialog = new WPMessageDialog(PresentationsActivity.this, "ERROR", "데이터를 불러오는데 실패했습니다.\n다시 시도해주세요", new View.OnClickListener() {
@@ -80,12 +93,31 @@ public class PresentationsActivity extends AppCompatActivity {
                         });
                     }
 
-                    intent.putExtra(Constants.EXTRA_PRESENTATION_ID, mPresentationsModel.getRows().get(position).getId());
-                    intent.putExtra(Constants.EXTRA_PRESENTATION_NAME, mPresentationsModel.getRows().get(position).getTitle());
+                    intent.putExtra(Constants.EXTRA_PRESENTATION_ID, presentationModelList.get(position).getId());
+                    intent.putExtra(Constants.EXTRA_PRESENTATION_NAME, presentationModelList.get(position).getTitle());
                     startActivity(intent);
                 }
             });
 
+            progressDialog.dismiss();
+        }
+
+        @Override
+        public void onFailure(Throwable t) {
+            progressDialog.dismiss();
+            Toast.makeText(PresentationsActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    };
+    private Callback<PresentationsModel> mResumeCallback = new Callback<PresentationsModel>() {
+        @Override
+        public void onResponse(Response<PresentationsModel> response, Retrofit retrofit) {
+            mPresentationsModel = response.body();
+            presentationModelList.clear();
+            presentationModelList.addAll(mPresentationsModel.getRows());
+            presentationsAdapter.notifyDataSetChanged();
+            if (presentationModelList.size() == 0) {
+                presentationsListView.setEmptyView(presentationsEmptyView);
+            }
             progressDialog.dismiss();
         }
 
@@ -112,27 +144,81 @@ public class PresentationsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_presentations);
         ButterKnife.bind(this);
 
-        initializeToolBar(getIntent().getExtras().getString(Constants.EXTRA_CATEGORY_NAME));
-        category_id = getIntent().getExtras().getInt(Constants.EXTRA_CATEGORY_ID);
+        activityComeIn = getIntent().getExtras().getString(Constants.EXTRA_PRESENTATION_COME_IN);
+
+        if (activityComeIn.equals("category")) {
+            initializeToolBar(getIntent().getExtras().getString(Constants.EXTRA_CATEGORY_NAME));
+            category_id = getIntent().getExtras().getInt(Constants.EXTRA_CATEGORY_ID);
+        } else if (activityComeIn.equals("user_presentations")) {
+            initializeToolBar(PreferencesManager.getInstance().getUser().getFullname() + "님이 올린 자료");
+            access_token = getIntent().getExtras().getString(Constants.EXTRA_ACCESS_TOKEN);
+        } else if (activityComeIn.equals("user_id_presentations")) {
+            initializeToolBar(getIntent().getExtras().getString(Constants.EXTRA_USER_NAME) + "님이 올린 자료");
+            user_id = getIntent().getExtras().getInt(Constants.EXTRA_USER_ID);
+        } else if (activityComeIn.equals("team_id_presentations")) {
+            initializeToolBar(getIntent().getExtras().getString(Constants.EXTRA_TEAM_NAME) + "의 자료");
+            team_id = getIntent().getExtras().getInt(Constants.EXTRA_TEAM_ID);
+        } else if (activityComeIn.equals("user_favorite_presentations")) {
+            initializeToolBar(PreferencesManager.getInstance().getUser().getFullname() + "님이 좋아한 자료");
+            access_token = getIntent().getExtras().getString(Constants.EXTRA_ACCESS_TOKEN);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
+        progressDialog = new ProgressDialog(PresentationsActivity.this);
+        progressDialog.setMessage("목록를 가져오는 중입니다.");
+        progressDialog.setIndeterminate(false);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(true);
+        progressDialog.show();
+
         if (mPresentationsModel == null) {
-            PresentationService presentationService = ServiceGenerator.createService(PresentationService.class);
-            Call<PresentationsModel> call = presentationService.loadPresentations(category_id);
+            Call<PresentationsModel> call = null;
+            if (activityComeIn.equals("category")) {
+                PresentationService presentationService = ServiceGenerator.createService(PresentationService.class);
+                call = presentationService.loadPresentations(category_id, null);
+            } else if (activityComeIn.equals("user_presentations")){
+                UserService userService = ServiceGenerator.createService(UserService.class);
+                call = userService.loadUserPresentations(access_token);
+            } else if (activityComeIn.equals("user_id_presentations")) {
+                PresentationService presentationService = ServiceGenerator.createService(PresentationService.class);
+                call = presentationService.loadPresentations(null, user_id);
+            } else if (activityComeIn.equals("team_id_presentations")) {
+                TeamService teamService = ServiceGenerator.createService(TeamService.class);
+                call = teamService.loadPresentationByTeam(team_id);
+            } else if (activityComeIn.equals("user_favorite_presentations")) {
+                UserService userService = ServiceGenerator.createService(UserService.class);
+                call = userService.loadUserFavoritePresentations(access_token);
+            }
 
             call.enqueue(mCallback);
-
-            progressDialog = new ProgressDialog(PresentationsActivity.this);
-            progressDialog.setMessage("목록를 가져오는 중입니다.");
-            progressDialog.setIndeterminate(false);
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.setCancelable(true);
-            progressDialog.show();
         }
+        else {
+            Call<PresentationsModel> call = null;
+            if (activityComeIn.equals("category")) {
+                PresentationService presentationService = ServiceGenerator.createService(PresentationService.class);
+                call = presentationService.loadPresentations(category_id, null);
+            } else if (activityComeIn.equals("user_presentations")){
+                UserService userService = ServiceGenerator.createService(UserService.class);
+                call = userService.loadUserPresentations(access_token);
+            } else if (activityComeIn.equals("user_id_presentations")) {
+                PresentationService presentationService = ServiceGenerator.createService(PresentationService.class);
+                call = presentationService.loadPresentations(null, user_id);
+            } else if (activityComeIn.equals("team_id_presentations")) {
+                TeamService teamService = ServiceGenerator.createService(TeamService.class);
+                call = teamService.loadPresentationByTeam(team_id);
+            } else if (activityComeIn.equals("user_favorite_presentations")) {
+                UserService userService = ServiceGenerator.createService(UserService.class);
+                call = userService.loadUserFavoritePresentations(access_token);
+            }
+
+            call.enqueue(mResumeCallback);
+        }
+
+        Log.i("activityComeIn", activityComeIn);
     }
 
     @Override

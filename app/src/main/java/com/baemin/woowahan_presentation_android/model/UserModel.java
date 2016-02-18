@@ -14,6 +14,7 @@ public class UserModel implements Serializable {
     private int team_id;
     private String team_name;
     private ImageModel image;
+    private int presentations_count;
 
     public int getId() {
         return id;
@@ -69,5 +70,13 @@ public class UserModel implements Serializable {
 
     public void setImage(ImageModel image) {
         this.image = image;
+    }
+
+    public int getPresentations_count() {
+        return presentations_count;
+    }
+
+    public void setPresentations_count(int presentations_count) {
+        this.presentations_count = presentations_count;
     }
 }

@@ -3,27 +3,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.baemin.woowahan_presentation_android.presentation.PresentationPdfFragment">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/gray">
+
         <RelativeLayout
             android:id="@+id/fragment_presentation_pdf_titlebar_rl"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginBottom="2dp"
             android:background="@color/statusbar_background">
+
             <RelativeLayout
                 android:id="@+id/fragment_presentation_pdf_chevronleft_rl"
                 android:layout_width="60dp"
                 android:layout_height="match_parent">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/ic_chevron_left_white_24dp"/>
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/ic_chevron_left_white_24dp" />
             </RelativeLayout>
+
             <TextView
                 android:id="@+id/fragment_presentation_pdf_title_tv"
                 android:layout_width="wrap_content"
@@ -32,24 +37,32 @@
                 android:layout_centerVertical="true"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                tools:text="size"/>
+                tools:text="size" />
+
             <RelativeLayout
                 android:id="@+id/fragment_presentation_pdf_chevronright_rl"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/ic_chevron_right_white_24dp"/>
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/ic_chevron_right_white_24dp" />
             </RelativeLayout>
         </RelativeLayout>
-        <com.baemin.woowahan_presentation_android.base.ViewPagerFixed
-            android:id="@+id/fragment_presentation_pdf_vp"
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/fragment_presentation_pdf_titlebar_rl"/>
+            android:layout_below="@+id/fragment_presentation_pdf_titlebar_rl">
+
+            <com.baemin.woowahan_presentation_android.base.ViewPagerFixed
+                android:id="@+id/fragment_presentation_pdf_vp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
     </RelativeLayout>
 </FrameLayout>

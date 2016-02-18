@@ -1,45 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.baemin.woowahan_presentation_android.presentation.PresentationActivity">
 
-    <!-- TOOLBAR -->
-    <RelativeLayout
-        android:id="@+id/activity_presentation_toolbar_rl"
-        android:layout_width="match_parent"
-        android:layout_height="60dp">
-        <include
-            android:id="@+id/activity_presentation_toolbar_include"
-            layout="@layout/layout_toolbar_detail"/>
-    </RelativeLayout>
-
-    <!-- CONTENT -->
-    <RelativeLayout
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:sothree="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/activity_presentation_sliding_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/activity_presentation_toolbar_rl">
-        <LinearLayout
+        android:gravity="bottom"
+        sothree:umanoOverlay="true"
+        sothree:umanoPanelHeight="40dp"
+        sothree:umanoShadowHeight="0dp"
+        sothree:umanoDragView="@+id/activity_presentation_drag_view">
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <android.support.design.widget.TabLayout
-                android:id="@+id/activity_presentation_tl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tabIndicatorColor="@color/statusbar_background"
-                app:tabGravity="fill"
-                app:tabMode="fixed" />
+            android:layout_height="match_parent">
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/activity_presentation_vp"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@color/white" />
-        </LinearLayout>
-    </RelativeLayout>
+                android:layout_height="match_parent">
+                <!-- TOOLBAR -->
+                <RelativeLayout
+                    android:id="@+id/activity_presentation_toolbar_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp">
 
+                    <include
+                        android:id="@+id/activity_presentation_toolbar_include"
+                        layout="@layout/layout_toolbar_detail_presentaion" />
+                </RelativeLayout>
+
+                <!-- CONTENT -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/activity_presentation_toolbar_rl">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <android.support.design.widget.TabLayout
+                            android:id="@+id/activity_presentation_tl"
+                            style="@style/MyCustomTabLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:tabGravity="fill"
+                            app:tabIndicatorColor="@color/statusbar_background"
+                            app:tabMode="fixed" />
+
+                        <android.support.v4.view.ViewPager
+                            android:id="@+id/activity_presentation_vp"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginBottom="40dp"
+                            android:layout_weight="1"
+                            android:background="@color/white" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </RelativeLayout>
+        </FrameLayout>
+
+        <include
+            android:id="@+id/activity_presentation_drag_view"
+            layout="@layout/layout_sliding_comment" />
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 </RelativeLayout>
