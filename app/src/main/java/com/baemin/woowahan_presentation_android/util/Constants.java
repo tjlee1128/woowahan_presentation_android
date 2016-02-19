@@ -5,8 +5,8 @@ package com.baemin.woowahan_presentation_android.util;
  */
 public class Constants {
 
-    public static final String API_SERVER_BASE_URL = "http://presentation.10.10.1.233.xip.io/";
-    public static final String DEFAULT_THUMB_URL = "http://presentation.10.10.1.233.xip.io/system/images/ic_default_thumb.png";
+    public static final String API_SERVER_BASE_URL = "http://10.10.1.233:3000/";
+    public static final String DEFAULT_THUMB_URL = "http://10.10.1.233:3000/system/images/ic_default_thumb.png";
 
     // Intent Extra => EXTRA_
     public final static String EXTRA_USER_ID = "com.baemin.woowahan_presentation_android.EXTRA_USER_ID";

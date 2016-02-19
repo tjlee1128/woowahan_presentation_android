@@ -104,19 +104,19 @@ public class PresentationActivity extends AppCompatActivity {
                     presentationCommentAdapter = new PresentationCommentAdapter(PresentationActivity.this, presentationModel.getComments());
                     slidingCommentListView.setAdapter(presentationCommentAdapter);
                     slidingCommentListView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
-                    presentationCommentAdapter.registerDataSetObserver(new DataSetObserver() {
-                        @Override
-                        public void onChanged() {
-                            super.onChanged();
-                            slidingTitleTextView.setText("댓글(" + presentationCommentAdapter.getCount() + " 개)");
-                            slidingCommentListView.setSelection(presentationCommentAdapter.getCount() - 1);
-                        }
-                    });
                 }
                 // empty comment
                 else {
 
                 }
+                presentationCommentAdapter.registerDataSetObserver(new DataSetObserver() {
+                    @Override
+                    public void onChanged() {
+                        super.onChanged();
+                        slidingTitleTextView.setText("댓글(" + presentationCommentAdapter.getCount() + " 개)");
+                        slidingCommentListView.setSelection(presentationCommentAdapter.getCount() - 1);
+                    }
+                });
             }
             // 가로방향
             else {

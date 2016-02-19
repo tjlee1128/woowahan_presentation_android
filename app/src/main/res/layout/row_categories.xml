@@ -2,69 +2,46 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:descendantFocusability="blocksDescendants">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/gray">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <RelativeLayout
                 android:id="@+id/row_categories_title_rl"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="60dp"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
+                android:background="@color/statusbar_background"
                 android:paddingLeft="12dp"
-                android:paddingRight="12dp"
-                android:background="@color/statusbar_background">
+                android:paddingRight="12dp">
+
                 <TextView
                     android:id="@+id/row_categories_title_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="30dp"
                     android:layout_centerVertical="true"
-                    android:singleLine="true"
+                    android:layout_marginRight="30dp"
                     android:ellipsize="marquee"
+                    android:singleLine="true"
                     android:textColor="@color/white"
                     android:textSize="16sp"
-                    tools:text="title"/>
+                    tools:text="title" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/ic_chevron_right_white_24dp"
+                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"/>
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="230dp"
-                android:background="@color/white"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_below="@+id/row_categories_title_rl"
-                android:gravity="center">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    android:text="썸네일이 들어갈 공간입니다"/>
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="230dp"
-                android:layout_below="@+id/row_categories_title_rl">
-                <com.baemin.woowahan_presentation_android.base.ViewPagerFixed
-                    android:id="@+id/row_categories_thumb_vp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"/>
+                    android:background="@drawable/ic_chevron_right_white_24dp" />
             </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
-
 </RelativeLayout>

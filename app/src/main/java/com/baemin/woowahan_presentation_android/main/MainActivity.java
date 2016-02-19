@@ -1,5 +1,6 @@
 package com.baemin.woowahan_presentation_android.main;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,10 +13,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.baemin.woowahan_presentation_android.base.ViewPagerFixed;
+import com.baemin.woowahan_presentation_android.model.PresentationModel;
+import com.baemin.woowahan_presentation_android.model.PresentationsModel;
+import com.baemin.woowahan_presentation_android.network.FavoriteService;
+import com.baemin.woowahan_presentation_android.network.ServiceGenerator;
 import com.baemin.woowahan_presentation_android.presentation.PresentationsActivity;
 import com.baemin.woowahan_presentation_android.R;
 import com.baemin.woowahan_presentation_android.search.SearchActivity;
@@ -30,6 +38,10 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,11 +49,14 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.activity_main_toolbar_include)
     View toolbarView;
 
+    //
+    private ProgressDialog progressDialog;
+
     // Drawer
-    View drawerHeaderView;
-    RoundedImageView userImageView;
-    TextView userTextView;
-    TextView teamTextView;
+    private View drawerHeaderView;
+    private RoundedImageView userImageView;
+    private TextView userTextView;
+    private TextView teamTextView;
     @Bind(R.id.activity_main_dl)
     DrawerLayout drawerLayout;
     @Bind(R.id.activity_main_drawer_lv)
@@ -50,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
     // Main List
     @Bind(R.id.activity_main_category_lv)
     ListView categoriesListView;
+    View categoriesHeaderView;
+    private ViewPagerFixed headerViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,18 +77,14 @@ public class MainActivity extends AppCompatActivity {
 
         initializeToolBar();
         initializeDrawer();
+        initializeHeader();
 
-        categoriesListView.setAdapter(new MainCategoriesAdapter(MainActivity.this, PreferencesManager.getInstance().getCategories().getRows()));
-        categoriesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this, PresentationsActivity.class);
-                intent.putExtra(Constants.EXTRA_PRESENTATION_COME_IN, "category");
-                intent.putExtra(Constants.EXTRA_CATEGORY_ID, PreferencesManager.getInstance().getCategories().getRows().get(position).getId());
-                intent.putExtra(Constants.EXTRA_CATEGORY_NAME, PreferencesManager.getInstance().getCategories().getRows().get(position).getName());
-                startActivity(intent);
-            }
-        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     @Override
@@ -142,6 +155,51 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra(Constants.EXTRA_ACCESS_TOKEN, PreferencesManager.getInstance().getAccessToken());
                     startActivity(intent);
                 }
+            }
+        });
+    }
+
+    private void initializeHeader() {
+        categoriesHeaderView = getLayoutInflater().inflate(R.layout.layout_main_lv_header, null, false);
+
+        headerViewPager = (ViewPagerFixed) categoriesHeaderView.findViewById(R.id.layout_main_lv_header_vp);
+        FavoriteService favoriteService = ServiceGenerator.createService(FavoriteService.class);
+        Call<PresentationsModel> call = favoriteService.loadFavoritePresentation();
+
+        progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog.setMessage("목록를 가져오는 중입니다.");
+        progressDialog.setIndeterminate(false);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(true);
+        progressDialog.show();
+
+        call.enqueue(new Callback<PresentationsModel>() {
+            @Override
+            public void onResponse(Response<PresentationsModel> response, Retrofit retrofit) {
+                List<PresentationModel> presentationModelList = response.body().getRows();
+
+                headerViewPager.setAdapter(new MainFavoritePagerAdapter(MainActivity.this, presentationModelList));
+
+                categoriesListView.addHeaderView(categoriesHeaderView);
+                categoriesListView.setAdapter(new MainCategoriesAdapter(MainActivity.this, PreferencesManager.getInstance().getCategories().getRows()));
+                categoriesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(MainActivity.this, PresentationsActivity.class);
+                        intent.putExtra(Constants.EXTRA_PRESENTATION_COME_IN, "category");
+                        intent.putExtra(Constants.EXTRA_CATEGORY_ID, PreferencesManager.getInstance().getCategories().getRows().get(position - 1).getId());
+                        intent.putExtra(Constants.EXTRA_CATEGORY_NAME, PreferencesManager.getInstance().getCategories().getRows().get(position - 1).getName());
+                        startActivity(intent);
+                    }
+                });
+
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
             }
         });
     }
